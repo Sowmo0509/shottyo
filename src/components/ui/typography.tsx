@@ -2,7 +2,6 @@ import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
-import { useAppStore } from "@/store/useAppStore";
 
 // Semantic base definitions for dynamic application
 const typographyVariants = cva("text-foreground", {
@@ -34,8 +33,6 @@ export interface TypographyProps extends React.HTMLAttributes<HTMLElement>, Vari
 }
 
 const Typography = React.forwardRef<HTMLElement, TypographyProps>(({ className, variant, asChild = false, as, ...props }, ref) => {
-  const { language } = useAppStore();
-
   let defaultAs: React.ElementType = "div";
   if (variant === "p" || variant === "lead" || variant === "muted" || variant === "large") defaultAs = "p";
   if (variant === "span" || variant === "small") defaultAs = "span";
@@ -46,10 +43,7 @@ const Typography = React.forwardRef<HTMLElement, TypographyProps>(({ className, 
 
   const Comp = asChild ? Slot : as || defaultAs;
 
-  // Apply mapped font classes
-  const fontClass = language === "bn" ? "font-bengali" : "font-sans";
-
-  return <Comp className={cn(typographyVariants({ variant, className }), fontClass)} ref={ref as React.ForwardedRef<any>} {...props} />;
+  return <Comp className={cn(typographyVariants({ variant, className }), "font-dynamic")} ref={ref as React.ForwardedRef<any>} {...props} />;
 });
 Typography.displayName = "Typography";
 

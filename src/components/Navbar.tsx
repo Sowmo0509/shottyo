@@ -13,16 +13,16 @@ export function Navbar() {
   };
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center flex-row justify-between px-4 md:px-8 mx-auto">
+    <nav className="sticky top-4 z-50 container bg-navbar text-navbar-foreground backdrop-blur supports-backdrop-filter:bg-navbar/60 rounded-xl">
+      <div className="flex h-16 items-center flex-row justify-between px-4 md:px-8 mx-auto">
         <Link href="/" className="flex items-center space-x-2">
           <Scale className="h-6 w-6" />
-          <Heading as="span" variant="large" className="inline-block mt-0">
+          <Heading as="span" variant="large" className="inline-block mt-0 text-white">
             {language === "bn" ? "জাস্টিস ট্র্যাকার" : "Justice Tracker"}
           </Heading>
         </Link>
         <div className="flex items-center space-x-4">
-          <button onClick={toggleLanguage} className="rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground transition-colors">
+          <button onClick={toggleLanguage} className="rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground transition-colors text-white">
             {language === "en" ? "বাংলা" : "English"}
           </button>
         </div>
