@@ -1,0 +1,61 @@
+"use client";
+
+import { useQuery } from "@tanstack/react-query";
+import { incidentApi } from "@/lib/api";
+import { useAppStore } from "@/store/useAppStore";
+import Link from "next/link";
+import { format } from "date-fns";
+
+export function IncidentList() {
+  const { language } = useAppStore();
+
+  const {
+    data: incidents,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["incidents"],
+    queryFn: incidentApi.getAll,
+  });
+
+  if (isLoading) return <div className="text-center py-20">Loading...</div>;
+
+  if (error) return <div className="text-center py-20 text-red-500">Failed to load incidents.</div>;
+
+  if (!incidents || incidents.length === 0) {
+    return <div className="text-center py-20">{language === "bn" ? "কোনো ঘটনা পাওয়া যায়নি।" : "No incidents found."}</div>;
+  }
+
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {incidents.map((incident) => (
+        <Link key={incident._id} href={`/incident/${incident.slug.current}`} className="group block rounded-lg border bg-card text-card-foreground shadow-sm hover:shadow-md transition-all overflow-hidden">
+          {incident.images && incident.images.length > 0 ? (
+            <div className="aspect-video w-full bg-muted overflow-hidden">
+              {/* Note: I'm not using Next/Image here yet until Sanity Image URL is configured fully */}
+              <img src={"/placeholder-image.jpg"} alt="Incident placeholder" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+            </div>
+          ) : (
+            <div className="aspect-video w-full bg-muted flex items-center justify-center">
+              <span className="text-muted-foreground">No image available</span>
+            </div>
+          )}
+
+          <div className="p-6">
+            <div className="flex justify-between items-start mb-4">
+              <h3 className="text-lg font-semibold leading-tight line-clamp-2">{language === "bn" && incident.title.bn ? incident.title.bn : incident.title.en}</h3>
+            </div>
+
+            <div className="flex flex-wrap gap-2 mb-4">
+              <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${incident.status === "open" ? "bg-red-100 text-red-800" : incident.status === "closed" ? "bg-green-100 text-green-800" : "bg-yellow-100 text-yellow-800"}`}>{incident.status.toUpperCase()}</span>
+
+              <span className="inline-flex items-center rounded-full bg-secondary px-2.5 py-0.5 text-xs font-semibold text-secondary-foreground">{format(new Date(incident.dateOfIncident), "MMM d, yyyy")}</span>
+            </div>
+
+            <p className="text-sm text-muted-foreground line-clamp-3">{language === "bn" && incident.description?.bn ? incident.description.bn : incident.description?.en || "No description available"}</p>
+          </div>
+        </Link>
+      ))}
+    </div>
+  );
+}
