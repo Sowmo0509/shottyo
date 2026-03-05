@@ -3,6 +3,7 @@
 import { Incident } from "@/types";
 import { useAppStore } from "@/store/useAppStore";
 import { format } from "date-fns";
+import { urlFor } from "@/sanity/lib/image";
 
 interface Props {
   incident: Incident | null;
@@ -47,7 +48,7 @@ export function IncidentDetail({ incident }: Props) {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {incident.images.map((img, i) => (
               <div key={i} className="aspect-video bg-muted rounded-md flex items-center justify-center overflow-hidden">
-                <img src={"/placeholder-image.jpg"} alt="Gallery image" className="object-cover w-full h-full" />
+                <img src={urlFor(img as Parameters<typeof urlFor>[0]).url()} alt={`Gallery image ${i + 1}`} className="object-cover w-full h-full" />
               </div>
             ))}
           </div>

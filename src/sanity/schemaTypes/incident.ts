@@ -1,4 +1,6 @@
 import { defineType, defineField } from "sanity";
+import { divisions } from "../lib/locations";
+import { DistrictSelectInput } from "../components/DistrictSelectInput";
 
 export const incident = defineType({
   name: "incident",
@@ -36,6 +38,24 @@ export const incident = defineType({
       name: "location",
       title: "Location",
       type: "localeString",
+    }),
+    defineField({
+      name: "division",
+      title: "Division",
+      type: "string",
+      options: {
+        list: divisions,
+      },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "district",
+      title: "District",
+      type: "string",
+      components: {
+        input: DistrictSelectInput,
+      },
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "images",

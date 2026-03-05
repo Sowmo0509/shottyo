@@ -4,6 +4,7 @@ import { Incident } from "@/types";
 import { useAppStore } from "@/store/useAppStore";
 import Link from "next/link";
 import { format } from "date-fns";
+import { urlFor } from "@/sanity/lib/image";
 
 interface Props {
   incidents: Incident[] | null;
@@ -23,7 +24,7 @@ export function IncidentList({ incidents }: Props) {
           {incident.images && incident.images.length > 0 ? (
             <div className="aspect-video w-full bg-muted overflow-hidden">
               {/* Note: I'm not using Next/Image here yet until Sanity Image URL is configured fully */}
-              <img src={"/placeholder-image.jpg"} alt="Incident placeholder" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+              <img src={urlFor(incident.images[0] as Parameters<typeof urlFor>[0]).url()} alt="Incident placeholder" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
             </div>
           ) : (
             <div className="aspect-video w-full bg-muted flex items-center justify-center">
