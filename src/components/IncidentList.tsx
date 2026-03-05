@@ -19,7 +19,7 @@ export function IncidentList({ incidents }: Props) {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       {incidents.map((incident) => (
         <Link key={incident._id} href={`/incident/${incident.slug.current}`} className="group block rounded-lg border bg-card text-card-foreground shadow-sm hover:shadow-md transition-all overflow-hidden">
           {incident.images && incident.images.length > 0 ? (

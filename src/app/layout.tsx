@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Noto_Sans_Bengali } from "next/font/google";
 import "./globals.css";
+import { HydrationWrapper } from "@/components/HydrationWrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,7 +30,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} ${notoBengali.variable} antialiased min-h-screen flex flex-col`}>{children}</body>
+      <body className={`${geistSans.variable} ${geistMono.variable} ${notoBengali.variable} antialiased min-h-screen flex flex-col`}>
+        <HydrationWrapper>{children}</HydrationWrapper>
+      </body>
     </html>
   );
 }

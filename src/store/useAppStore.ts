@@ -25,6 +25,7 @@ export const useAppStore = create<AppState>()(
     {
       name: "app-storage",
       partialize: (state) => ({ language: state.language }), // only persist language
+      skipHydration: true,
     },
   ),
 );
