@@ -91,11 +91,7 @@
   --sidebar-ring: oklch(0.708 0 0);
   --navbar: oklch(0.145 0 0); /* black */
   --navbar-foreground: oklch(0.985 0 0); /* white */
-  --font-dynamic: var(--font-sans);
-}
-
-:root[data-lang="bn"] {
-  --font-dynamic: var(--font-bengali);
+  --font-dynamic: var(--font-sans), var(--font-bengali);
 }
 
 .dark {
