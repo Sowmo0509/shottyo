@@ -5,6 +5,7 @@ import { useAppStore } from "@/store/useAppStore";
 import Link from "next/link";
 import { format } from "date-fns";
 import { urlFor } from "@/sanity/lib/image";
+import { Heading, Text } from "./ui/typography";
 
 interface Props {
   incidents: Incident[] | null;
@@ -34,7 +35,9 @@ export function IncidentList({ incidents }: Props) {
 
           <div className="p-6">
             <div className="flex justify-between items-start mb-4">
-              <h3 className="text-lg font-semibold leading-tight line-clamp-2">{language === "bn" && incident.title.bn ? incident.title.bn : incident.title.en}</h3>
+              <Heading as="h3" variant="h4" className="leading-tight line-clamp-2">
+                {language === "bn" && incident.title.bn ? incident.title.bn : incident.title.en}
+              </Heading>
             </div>
 
             <div className="flex flex-wrap gap-2 mb-4">
@@ -43,7 +46,9 @@ export function IncidentList({ incidents }: Props) {
               <span className="inline-flex items-center rounded-full bg-secondary px-2.5 py-0.5 text-xs font-semibold text-secondary-foreground">{format(new Date(incident.dateOfIncident), "MMM d, yyyy")}</span>
             </div>
 
-            <p className="text-sm text-muted-foreground line-clamp-3">{language === "bn" && incident.description?.bn ? incident.description.bn : incident.description?.en || "No description available"}</p>
+            <Text variant="muted" className="line-clamp-3 mt-0 leading-relaxed">
+              {language === "bn" && incident.description?.bn ? incident.description.bn : incident.description?.en || "No description available"}
+            </Text>
           </div>
         </Link>
       ))}

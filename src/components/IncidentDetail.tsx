@@ -4,6 +4,7 @@ import { Incident } from "@/types";
 import { useAppStore } from "@/store/useAppStore";
 import { format } from "date-fns";
 import { urlFor } from "@/sanity/lib/image";
+import { Heading, Text } from "./ui/typography";
 
 interface Props {
   incident: Incident | null;
@@ -36,15 +37,23 @@ export function IncidentDetail({ incident }: Props) {
           )}
         </div>
 
-        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight tight">{title}</h1>
+        <Heading as="h1" variant="h1" className="tracking-tight tight">
+          {title}
+        </Heading>
 
-        {description && <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">{description}</p>}
+        {description && (
+          <Text variant="lead" className="leading-relaxed mt-4">
+            {description}
+          </Text>
+        )}
       </section>
 
       {/* Media Gallery placeholders */}
       {incident.images && incident.images.length > 0 && (
         <section className="space-y-4">
-          <h2 className="text-2xl font-bold border-b pb-2">{language === "bn" ? "গ্যালারি" : "Gallery"}</h2>
+          <Heading as="h2" variant="h2" className="border-b pb-2">
+            {language === "bn" ? "গ্যালারি" : "Gallery"}
+          </Heading>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {incident.images.map((img, i) => (
               <div key={i} className="aspect-video bg-muted rounded-md flex items-center justify-center overflow-hidden">
@@ -58,7 +67,9 @@ export function IncidentDetail({ incident }: Props) {
       {/* Victims Section */}
       {incident.victims && incident.victims.length > 0 && (
         <section className="space-y-6">
-          <h2 className="text-2xl font-bold border-b pb-2">{language === "bn" ? "ক্ষতিগ্রস্তরা" : "Victims"}</h2>
+          <Heading as="h2" variant="h2" className="border-b pb-2">
+            {language === "bn" ? "ক্ষতিগ্রস্তরা" : "Victims"}
+          </Heading>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {incident.victims.map((victim) => {
               const victimName = language === "bn" && victim.name.bn ? victim.name.bn : victim.name.en;
@@ -68,8 +79,10 @@ export function IncidentDetail({ incident }: Props) {
                 <div key={victim._id} className="p-4 border rounded-lg bg-card shadow-sm flex gap-4">
                   <div className="w-16 h-16 bg-muted rounded-full overflow-hidden shrink-0 flex items-center justify-center text-xl font-bold text-muted-foreground uppercase">{victimName?.charAt(0)}</div>
                   <div>
-                    <h3 className="font-semibold text-lg">{victimName}</h3>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <Heading as="h3" variant="large">
+                      {victimName}
+                    </Heading>
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
                       <span className="capitalize">{victim.status}</span>
                       {victim.age && (
                         <>
@@ -78,7 +91,11 @@ export function IncidentDetail({ incident }: Props) {
                         </>
                       )}
                     </div>
-                    {victimDesc && <p className="text-sm mt-2 text-muted-foreground">{victimDesc}</p>}
+                    {victimDesc && (
+                      <Text variant="muted" className="mt-2">
+                        {victimDesc}
+                      </Text>
+                    )}
                   </div>
                 </div>
               );
@@ -90,7 +107,9 @@ export function IncidentDetail({ incident }: Props) {
       {/* Timeline Section */}
       {incident.timeline && incident.timeline.length > 0 && (
         <section className="space-y-6">
-          <h2 className="text-2xl font-bold border-b pb-2">{language === "bn" ? "ঘটনাক্রম" : "Timeline"}</h2>
+          <Heading as="h2" variant="h2" className="border-b pb-2">
+            {language === "bn" ? "ঘটনাক্রম" : "Timeline"}
+          </Heading>
           <div className="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-linear-to-b before:from-transparent before:via-border before:to-transparent">
             {incident.timeline.map((event, index) => {
               const eventTitle = language === "bn" && event.title.bn ? event.title.bn : event.title.en;
@@ -103,10 +122,12 @@ export function IncidentDetail({ incident }: Props) {
                   </div>
                   <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-card border shadow-sm p-4 rounded text-card-foreground">
                     <div className="flex items-center justify-between space-x-2 mb-1">
-                      <div className="font-bold text-slate-900 dark:text-slate-100">{eventTitle}</div>
+                      <Heading as="h4" variant="small" className="text-slate-900 dark:text-slate-100">
+                        {eventTitle}
+                      </Heading>
                       <time className="font-caveat font-medium text-sm text-muted-foreground">{format(new Date(event.date), "MMM d, yyyy")}</time>
                     </div>
-                    {eventDesc && <div className="text-sm text-muted-foreground">{eventDesc}</div>}
+                    {eventDesc && <Text variant="muted">{eventDesc}</Text>}
                     <div className="mt-2 text-xs font-semibold capitalize px-2 py-1 bg-muted rounded-md inline-block">{event.eventType}</div>
                   </div>
                 </div>
@@ -119,9 +140,13 @@ export function IncidentDetail({ incident }: Props) {
       {/* Verdict Section */}
       {verdict && (
         <section className="space-y-4">
-          <h2 className="text-2xl font-bold border-b pb-2">{language === "bn" ? "রায় / সমাপ্তি" : "Verdict"}</h2>
+          <Heading as="h2" variant="h2" className="border-b pb-2">
+            {language === "bn" ? "রায় / সমাপ্তি" : "Verdict"}
+          </Heading>
           <div className="p-6 bg-secondary text-secondary-foreground rounded-lg">
-            <p className="text-lg leading-relaxed">{verdict}</p>
+            <Text variant="large" className="leading-relaxed font-normal">
+              {verdict}
+            </Text>
           </div>
         </section>
       )}
