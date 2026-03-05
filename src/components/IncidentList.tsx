@@ -1,26 +1,16 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
-import { incidentApi } from "@/lib/api";
+import { Incident } from "@/types";
 import { useAppStore } from "@/store/useAppStore";
 import Link from "next/link";
 import { format } from "date-fns";
 
-export function IncidentList() {
+interface Props {
+  incidents: Incident[] | null;
+}
+
+export function IncidentList({ incidents }: Props) {
   const { language } = useAppStore();
-
-  const {
-    data: incidents,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["incidents"],
-    queryFn: incidentApi.getAll,
-  });
-
-  if (isLoading) return <div className="text-center py-20">Loading...</div>;
-
-  if (error) return <div className="text-center py-20 text-red-500">Failed to load incidents.</div>;
 
   if (!incidents || incidents.length === 0) {
     return <div className="text-center py-20">{language === "bn" ? "কোনো ঘটনা পাওয়া যায়নি।" : "No incidents found."}</div>;

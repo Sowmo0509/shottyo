@@ -19,6 +19,8 @@ export interface Incident {
   videoUrls?: string[];
   status: "open" | "closed" | "pending";
   verdict?: LocalizedText;
+  victims?: Victim[];
+  timeline?: TimelineEvent[];
 }
 
 export interface Victim {

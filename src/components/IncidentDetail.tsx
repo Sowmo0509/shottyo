@@ -1,29 +1,17 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
-import { incidentApi } from "@/lib/api";
+import { Incident } from "@/types";
 import { useAppStore } from "@/store/useAppStore";
 import { format } from "date-fns";
 
 interface Props {
-  slug: string;
+  incident: Incident | null;
 }
 
-export function IncidentDetail({ slug }: Props) {
+export function IncidentDetail({ incident }: Props) {
   const { language } = useAppStore();
 
-  const {
-    data: incident,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["incident", slug],
-    queryFn: () => incidentApi.getBySlug(slug),
-  });
-
-  if (isLoading) return <div className="text-center py-20 text-muted-foreground">Loading...</div>;
-
-  if (error || !incident) {
+  if (!incident) {
     return <div className="text-center py-20 text-red-500">Failed to load incident details.</div>;
   }
 
