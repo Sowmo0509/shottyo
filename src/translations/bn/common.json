@@ -1,0 +1,22 @@
+{
+  "nav": {
+    "home": "হোম",
+    "incidents": "ঘটনাগুলো",
+    "about": "সম্পর্কে"
+  },
+  "incidents": {
+    "noImage": "কোন ছবি উপলব্ধ নেই",
+    "noDescription": "কোন বিবরণ উপলব্ধ নেই",
+    "status": {
+      "open": "খোলা",
+      "closed": "সম্পূর্ণ",
+      "inProgress": "চলমান"
+    },
+    "gallery": "গ্যালারি",
+    "victims": "ক্ষতিগ্রস্তরা",
+    "timeline": "ঘটনাক্রম",
+    "verdict": "রায় / সমাপ্তি",
+    "age": "বয়স",
+    "failedToLoad": "ঘটনার বিবরণ লোড করা যায়নি।"
+  }
+}

@@ -1,7 +1,7 @@
 "use client";
 
 import { Incident } from "@/types";
-import { useAppStore } from "@/store/useAppStore";
+import { useTranslation } from "@/hooks/useTranslation";
 import { format } from "date-fns";
 import { urlFor } from "@/sanity/lib/image";
 import { Heading, Text } from "./ui/typography";
@@ -11,10 +11,10 @@ interface Props {
 }
 
 export function IncidentDetail({ incident }: Props) {
-  const { language } = useAppStore();
+  const { t, language } = useTranslation();
 
   if (!incident) {
-    return <div className="text-center py-20 text-red-500">Failed to load incident details.</div>;
+    return <div className="text-center py-20 text-red-500">{t.common.incidents.failedToLoad}</div>;
   }
 
   const title = language === "bn" && incident.title.bn ? incident.title.bn : incident.title.en;
@@ -22,12 +22,23 @@ export function IncidentDetail({ incident }: Props) {
   const location = language === "bn" && incident.location?.bn ? incident.location.bn : incident.location?.en;
   const verdict = language === "bn" && incident.verdict?.bn ? incident.verdict.bn : incident.verdict?.en;
 
+  const getStatusLabel = (status: string) => {
+    switch (status) {
+      case "open":
+        return t.common.incidents.status.open;
+      case "closed":
+        return t.common.incidents.status.closed;
+      default:
+        return t.common.incidents.status.inProgress;
+    }
+  };
+
   return (
     <div className="max-w-4xl mx-auto space-y-12">
       {/* Header Section */}
       <section className="space-y-6">
         <div className="flex flex-wrap items-center gap-3">
-          <span className={`inline-flex items-center rounded-full px-3 py-1 text-sm font-semibold capitalize ${incident.status === "open" ? "bg-red-100 text-red-800" : incident.status === "closed" ? "bg-green-100 text-green-800" : "bg-yellow-100 text-yellow-800"}`}>{incident.status}</span>
+          <span className={`inline-flex items-center rounded-full px-3 py-1 text-sm font-semibold capitalize ${incident.status === "open" ? "bg-red-100 text-red-800" : incident.status === "closed" ? "bg-green-100 text-green-800" : "bg-yellow-100 text-yellow-800"}`}>{getStatusLabel(incident.status)}</span>
           <span className="text-muted-foreground font-medium">{format(new Date(incident.dateOfIncident), "MMMM d, yyyy")}</span>
           {location && (
             <>
@@ -52,12 +63,12 @@ export function IncidentDetail({ incident }: Props) {
       {incident.images && incident.images.length > 0 && (
         <section className="space-y-4">
           <Heading as="h2" variant="h2" className="border-b pb-2">
-            {language === "bn" ? "গ্যালারি" : "Gallery"}
+            {t.common.incidents.gallery}
           </Heading>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {incident.images.map((img, i) => (
               <div key={i} className="aspect-video bg-muted rounded-md flex items-center justify-center overflow-hidden">
-                <img src={urlFor(img as Parameters<typeof urlFor>[0]).url()} alt={`Gallery image ${i + 1}`} className="object-cover w-full h-full" />
+                <img src={urlFor(img as Parameters<typeof urlFor>[0]).url()} alt={`${t.common.incidents.gallery} ${i + 1}`} className="object-cover w-full h-full" />
               </div>
             ))}
           </div>
@@ -68,7 +79,7 @@ export function IncidentDetail({ incident }: Props) {
       {incident.victims && incident.victims.length > 0 && (
         <section className="space-y-6">
           <Heading as="h2" variant="h2" className="border-b pb-2">
-            {language === "bn" ? "ক্ষতিগ্রস্তরা" : "Victims"}
+            {t.common.incidents.victims}
           </Heading>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {incident.victims.map((victim) => {
@@ -87,7 +98,9 @@ export function IncidentDetail({ incident }: Props) {
                       {victim.age && (
                         <>
                           <span>•</span>
-                          <span>{language === "bn" ? `বয়স: ${victim.age}` : `Age: ${victim.age}`}</span>
+                          <span>
+                            {t.common.incidents.age}: {victim.age}
+                          </span>
                         </>
                       )}
                     </div>
@@ -108,7 +121,7 @@ export function IncidentDetail({ incident }: Props) {
       {incident.timeline && incident.timeline.length > 0 && (
         <section className="space-y-6">
           <Heading as="h2" variant="h2" className="border-b pb-2">
-            {language === "bn" ? "ঘটনাক্রম" : "Timeline"}
+            {t.common.incidents.timeline}
           </Heading>
           <div className="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-linear-to-b before:from-transparent before:via-border before:to-transparent">
             {incident.timeline.map((event, index) => {
@@ -141,7 +154,7 @@ export function IncidentDetail({ incident }: Props) {
       {verdict && (
         <section className="space-y-4">
           <Heading as="h2" variant="h2" className="border-b pb-2">
-            {language === "bn" ? "রায় / সমাপ্তি" : "Verdict"}
+            {t.common.incidents.verdict}
           </Heading>
           <div className="p-6 bg-secondary text-secondary-foreground rounded-lg">
             <Text variant="large" className="leading-relaxed font-normal">

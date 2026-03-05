@@ -1,0 +1,22 @@
+{
+  "nav": {
+    "home": "Home",
+    "incidents": "Incidents",
+    "about": "About"
+  },
+  "incidents": {
+    "noImage": "No image available",
+    "noDescription": "No description available",
+    "status": {
+      "open": "Open",
+      "closed": "Closed",
+      "inProgress": "In Progress"
+    },
+    "gallery": "Gallery",
+    "victims": "Victims",
+    "timeline": "Timeline",
+    "verdict": "Verdict",
+    "age": "Age",
+    "failedToLoad": "Failed to load incident details."
+  }
+}

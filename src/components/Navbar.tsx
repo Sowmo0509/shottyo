@@ -4,9 +4,11 @@ import Link from "next/link";
 import { useAppStore } from "@/store/useAppStore";
 import { Scale } from "lucide-react";
 import { Heading } from "./ui/typography";
+import { useTranslation } from "@/hooks/useTranslation";
 
 export function Navbar() {
-  const { language, setLanguage } = useAppStore();
+  const { setLanguage } = useAppStore();
+  const { t, language } = useTranslation();
 
   const toggleLanguage = () => {
     setLanguage(language === "en" ? "bn" : "en");
@@ -18,7 +20,7 @@ export function Navbar() {
         <Link href="/" className="flex items-center space-x-2">
           <Scale className="h-6 w-6" />
           <Heading as="span" variant="large" className="inline-block mt-0 text-white">
-            {language === "bn" ? "জাস্টিস ট্র্যাকার" : "Justice Tracker"}
+            {t.home.title}
           </Heading>
         </Link>
         <div className="flex items-center space-x-4">
