@@ -15,6 +15,8 @@ export interface Incident {
   description?: LocalizedText;
   dateOfIncident: string;
   location?: LocalizedString;
+  division: string;
+  district: string;
   images?: unknown[];
   videoUrls?: string[];
   status: "open" | "closed" | "pending";

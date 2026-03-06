@@ -15,6 +15,8 @@ export const incidentApi = {
       description,
       dateOfIncident,
       location,
+      division,
+      district,
       images,
       videoUrls,
       status,

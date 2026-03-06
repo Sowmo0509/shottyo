@@ -11,6 +11,8 @@ export async function GET() {
       description,
       dateOfIncident,
       location,
+      division,
+      district,
       images,
       videoUrls,
       status,
