@@ -1,13 +1,11 @@
 "use client";
 
-import React, { useMemo, useState, useRef, useEffect, useCallback } from "react";
-import { ComposableMap, Geographies, Geography, ZoomableGroup } from "react-simple-maps";
+import React, { useMemo, useState, useRef, useEffect, useCallback, startTransition } from "react";
+import { ComposableMap, Geographies, Geography, ZoomableGroup } from "@vnedyalk0v/react19-simple-maps";
 import { useTheme } from "next-themes";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAppStore } from "@/store/useAppStore";
 import { Incident } from "@/types";
-
-const geoUrl = "/bangladesh-divisions.json";
 
 interface Props {
   incidents: Incident[] | null;
@@ -47,6 +45,8 @@ const DIVISION_CENTERS: Record<string, [number, number]> = {
   Rangpur: [89.2, 25.7],
 };
 
+const DEFAULT_CENTER = [90.2, 23.8] as [number, number];
+
 // 5-step color scale
 const COLOR_STEPS = [
   "#4ade80", // green-400  — 0
@@ -71,7 +71,6 @@ const STATUS_STYLES: Record<string, { label: string; labelBn: string; bg: string
   closed: { label: "Closed", labelBn: "বন্ধ", bg: "bg-green-500/20", text: "text-green-400" },
 };
 
-// Smoothly animates zoom + center using ease-out interpolation
 function useAnimatedZoom(initial: { zoom: number; center: [number, number] }) {
   const [display, setDisplay] = useState(initial);
   const target = useRef(initial);
@@ -88,14 +87,18 @@ function useAnimatedZoom(initial: { zoom: number; center: [number, number] }) {
       const t = Math.min((now - start) / DURATION, 1);
       const ease = 1 - Math.pow(1 - t, 3); // ease-out cubic
 
-      setDisplay((prev) => ({
-        zoom: prev.zoom + (target.current.zoom - prev.zoom) * ease,
-        center: [prev.center[0] + (target.current.center[0] - prev.center[0]) * ease, prev.center[1] + (target.current.center[1] - prev.center[1]) * ease],
-      }));
+      startTransition(() => {
+        setDisplay((prev) => ({
+          zoom: prev.zoom + (target.current.zoom - prev.zoom) * ease,
+          center: [prev.center[0] + (target.current.center[0] - prev.center[0]) * ease, prev.center[1] + (target.current.center[1] - prev.center[1]) * ease],
+        }));
+      });
 
       if (t < 1) raf.current = requestAnimationFrame(tick);
       else {
-        setDisplay(target.current);
+        startTransition(() => {
+          setDisplay(target.current);
+        });
         raf.current = null;
       }
     };
@@ -117,9 +120,18 @@ export function DivisionMap({ incidents }: Props) {
   const { language } = useAppStore();
   const { theme } = useTheme();
 
+  const [geoData, setGeoData] = useState<object | null>(null);
   const [selectedDivision, setSelectedDivision] = useState<string | null>(null);
-  const { display, animateTo } = useAnimatedZoom({ zoom: 1, center: [90.2, 23.8] });
+  const { display, animateTo } = useAnimatedZoom({ zoom: 1, center: DEFAULT_CENTER });
   const { zoom, center } = display;
+
+  // Fetch GeoJSON on mount to avoid URL constructor errors with bare paths
+  useEffect(() => {
+    fetch("/bangladesh-divisions.json")
+      .then((r) => r.json())
+      .then(setGeoData)
+      .catch(console.error);
+  }, []);
 
   // Map each incident to its division
   const incidentsByDivision = useMemo(() => {
@@ -141,13 +153,15 @@ export function DivisionMap({ incidents }: Props) {
   const legendLabels = ["0", `1–${Math.ceil(maxCount * 0.25)}`, `${Math.ceil(maxCount * 0.25) + 1}–${Math.ceil(maxCount * 0.5)}`, `${Math.ceil(maxCount * 0.5) + 1}–${Math.ceil(maxCount * 0.75)}`, `${Math.ceil(maxCount * 0.75) + 1}+`];
 
   const handleDivisionClick = (divisionName: string) => {
-    if (selectedDivision === divisionName) {
-      setSelectedDivision(null);
-      animateTo({ zoom: 1, center: [90.2, 23.8] });
-    } else {
-      setSelectedDivision(divisionName);
-      animateTo({ zoom: 3.5, center: DIVISION_CENTERS[divisionName] ?? [90.2, 23.8] });
-    }
+    startTransition(() => {
+      if (selectedDivision === divisionName) {
+        setSelectedDivision(null);
+        animateTo({ zoom: 1, center: DEFAULT_CENTER });
+      } else {
+        setSelectedDivision(divisionName);
+        animateTo({ zoom: 3.5, center: DIVISION_CENTERS[divisionName] ?? DEFAULT_CENTER });
+      }
+    });
   };
 
   const selectedIncidents = selectedDivision ? (incidentsByDivision[selectedDivision] ?? []) : [];
@@ -160,7 +174,7 @@ export function DivisionMap({ incidents }: Props) {
           <button
             onClick={() => {
               setSelectedDivision(null);
-              animateTo({ zoom: 1, center: [90.2, 23.8] });
+              animateTo({ zoom: 1, center: DEFAULT_CENTER });
             }}
             className="text-xs text-muted-foreground hover:text-foreground border border-muted px-3 py-1 rounded-full transition-colors">
             ← {language === "bn" ? "ফিরে যান" : "Back to full map"}
@@ -171,42 +185,47 @@ export function DivisionMap({ incidents }: Props) {
         <div className="flex flex-col lg:flex-row gap-4">
           {/* Map */}
           <div className="flex-1 min-h-[380px] sm:min-h-[460px]">
-            <ComposableMap projection="geoMercator" projectionConfig={{ scale: 3500, center: [90.2, 23.8] }} style={{ width: "100%", height: "100%" }}>
-              <ZoomableGroup zoom={zoom} center={center} onMoveEnd={() => {}}>
-                <Geographies geography={geoUrl}>
-                  {({ geographies }) =>
-                    geographies.map((geo) => {
-                      const divisionName = geo.properties.name;
-                      const count = divisionCounts[divisionName] || 0;
-                      const isSelected = selectedDivision === divisionName;
-                      const fill = isSelected
-                        ? "#3b82f6" // blue-500 when selected
-                        : getColorByCount(count, maxCount);
+            {!geoData ? (
+              <div className="flex items-center justify-center h-full text-muted-foreground text-sm">Loading map…</div>
+            ) : (
+              <ComposableMap projection="geoMercator" projectionConfig={{ scale: 5500, center: DEFAULT_CENTER as any }} style={{ width: "100%", height: "100%" }}>
+                <ZoomableGroup zoom={zoom} center={center as any} onMoveEnd={() => {}}>
+                  <Geographies geography={geoData}>
+                    {({ geographies }) =>
+                      geographies.map((geo) => {
+                        const divisionName = geo.properties?.name;
+                        if (!divisionName) return null;
+                        const count = divisionCounts[divisionName] || 0;
+                        const isSelected = selectedDivision === divisionName;
+                        const fill = isSelected
+                          ? "#3b82f6" // blue-500 when selected
+                          : getColorByCount(count, maxCount);
 
-                      return (
-                        <Geography
-                          key={geo.rsmKey}
-                          geography={geo}
-                          fill={fill}
-                          stroke={theme === "dark" ? "#1f2937" : "#ffffff"}
-                          strokeWidth={isSelected ? 2 : 1}
-                          onClick={() => handleDivisionClick(divisionName)}
-                          style={{
-                            default: { outline: "none" },
-                            hover: {
-                              fill: isSelected ? "#2563eb" : "#60a5fa",
-                              outline: "none",
-                              cursor: "pointer",
-                            },
-                            pressed: { outline: "none" },
-                          }}
-                        />
-                      );
-                    })
-                  }
-                </Geographies>
-              </ZoomableGroup>
-            </ComposableMap>
+                        return (
+                          <Geography
+                            key={String(geo.id ?? divisionName)}
+                            geography={geo}
+                            fill={fill}
+                            stroke={theme === "dark" ? "#1f2937" : "#ffffff"}
+                            strokeWidth={isSelected ? 2 : 1}
+                            onClick={() => handleDivisionClick(divisionName)}
+                            style={{
+                              default: { outline: "none" },
+                              hover: {
+                                fill: isSelected ? "#2563eb" : "#60a5fa",
+                                outline: "none",
+                                cursor: "pointer",
+                              },
+                              pressed: { outline: "none" },
+                            }}
+                          />
+                        );
+                      })
+                    }
+                  </Geographies>
+                </ZoomableGroup>
+              </ComposableMap>
+            )}
           </div>
 
           {/* Incident Panel */}
