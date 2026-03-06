@@ -18,9 +18,8 @@ export function Navbar() {
     <nav className="sticky top-4 z-50 container bg-navbar text-navbar-foreground backdrop-blur supports-backdrop-filter:bg-navbar/60 rounded-xl">
       <div className="flex h-16 items-center flex-row justify-between px-4 md:px-8 mx-auto">
         <Link href="/" className="flex items-center space-x-2">
-          <Scale className="h-6 w-6" />
           <Heading as="span" variant="large" className="inline-block mt-0 text-white">
-            {t.home.title}
+            সত্য
           </Heading>
         </Link>
         <div className="flex items-center space-x-4">

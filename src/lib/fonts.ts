@@ -1,9 +1,8 @@
-import { Poppins, Geist_Mono, Noto_Serif_Bengali } from "next/font/google";
+import { Inter_Tight, Geist_Mono, Noto_Serif_Bengali } from "next/font/google";
 
-export const fontSans = Poppins({
+export const fontSans = Inter_Tight({
   variable: "--font-sans",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
 });
 
 export const fontMono = Geist_Mono({
