@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { useTranslation } from "@/hooks/useTranslation";
 import { HERO_CRIME_STATS } from "./heroCrimeStats";
@@ -10,11 +9,12 @@ import { DocumentedPlatformCard } from "./DocumentedPlatformCard";
 
 interface HeroStatsSliderProps {
   totalCount: number;
+  slideIndex: number;
+  onSlideChange: (index: number) => void;
 }
 
-export function HeroStatsSlider({ totalCount }: HeroStatsSliderProps) {
+export function HeroStatsSlider({ totalCount, slideIndex, onSlideChange }: HeroStatsSliderProps) {
   const { language } = useTranslation();
-  const [slideIndex, setSlideIndex] = useState(0);
 
   const crime = HERO_CRIME_STATS[slideIndex];
   const barWidth2024Percent = Math.min(100, Math.round((crime.filed2024 / crime.filed2025) * 100));
@@ -26,7 +26,7 @@ export function HeroStatsSlider({ totalCount }: HeroStatsSliderProps) {
       transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
       className="lg:col-span-5 relative min-w-0"
     >
-      <CrimeCategoryTabs slideIndex={slideIndex} onSelect={setSlideIndex} language={language} />
+      <CrimeCategoryTabs slideIndex={slideIndex} onSelect={onSlideChange} language={language} />
 
       <div className="grid gap-3 sm:gap-4 sm:grid-cols-2 h-full">
         <AnimatePresence mode="wait" initial={false}>

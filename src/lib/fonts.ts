@@ -1,8 +1,9 @@
-import { Manrope, Geist_Mono, Noto_Serif_Bengali } from "next/font/google";
+import { Barlow, Geist_Mono, Noto_Serif_Bengali } from "next/font/google";
 
-export const fontSans = Manrope({
+export const fontSans = Barlow({
   variable: "--font-sans",
   subsets: ["latin"],
+  weight: ["400", "700"],
 });
 
 export const fontMono = Geist_Mono({

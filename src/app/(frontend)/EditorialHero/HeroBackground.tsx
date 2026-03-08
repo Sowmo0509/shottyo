@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import Image from "next/image";
 import { motion, useScroll, useTransform } from "motion/react";
 
 interface HeroBackgroundProps {
@@ -18,13 +18,16 @@ export function HeroBackground({ sectionRef }: HeroBackgroundProps) {
 
   return (
     <motion.div style={{ y, opacity }} className="absolute inset-0 w-full h-full">
-      <img
+      <Image
         src="/images/dark_bg.jpg"
         alt=""
-        className="absolute inset-0 w-full h-full object-cover object-right"
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover object-right"
         aria-hidden
       />
-      <div className="absolute inset-0 bg-linear-to-b from-black/40 via-black/70 to-red-500/80" />
+      <div className="absolute inset-0 bg-linear-to-b from-black/40 via-black/70 to-red-900/50" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.75)_100%)]" />
     </motion.div>
   );

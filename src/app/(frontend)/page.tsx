@@ -34,26 +34,26 @@ export default async function Home() {
 
   return (
     <div className="min-h-screen flex flex-col bg-background selection:bg-primary selection:text-primary-foreground">
-      <EditorialHero featuredIncident={featuredIncident} totalCount={allIncidents.length} />
+      <div className="p-2">
+        <EditorialHero featuredIncident={featuredIncident} totalCount={allIncidents.length} />
+      </div>
       <InvestigationNoticeSection />
-      {recentIncidents.length > 0 && (
-        <RecentIncidents incidents={[featuredIncident, ...recentIncidents].filter(Boolean)} />
-      )}
-      
+      {recentIncidents.length > 0 && <RecentIncidents incidents={[featuredIncident, ...recentIncidents].filter(Boolean)} />}
+
       <MapSection incidents={allIncidents} />
-      
+
       <MissionBento incidents={allIncidents} />
-      
+
       <ProcessSection />
-      
+
       <TestimonialsSection />
 
       <section id="incidents" aria-label="All Incidents" className="bg-muted/10 border-y border-border/50 overflow-x-hidden">
         <IncidentList incidents={remainingIncidents.length > 0 ? remainingIncidents : null} />
       </section>
-      
+
       <FaqSection />
-      
+
       <LandingCta />
       <Footer />
     </div>

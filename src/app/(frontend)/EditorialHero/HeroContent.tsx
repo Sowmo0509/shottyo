@@ -5,13 +5,18 @@ import { useTranslation } from "@/hooks/useTranslation";
 import { motion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { HERO_CRIME_STATS } from "./heroCrimeStats";
 
-const HEADLINE_BN = "সত্য প্রকাশ। ন্যায়বিচার প্রতিষ্ঠা।";
-const HEADLINE_EN = "Uncovering Truth. Demanding Justice.";
+interface HeroContentProps {
+  slideIndex: number;
+}
 
-export function HeroContent() {
+export function HeroContent({ slideIndex }: HeroContentProps) {
   const { t, language } = useTranslation();
-  const headline = language === "bn" ? HEADLINE_BN : HEADLINE_EN;
+  const headline = t.home.hero.headline;
+  const crime = HERO_CRIME_STATS[slideIndex];
+  const paragraphs = t.home.hero.paragraphs as Record<string, string> | undefined;
+  const paragraph = paragraphs?.[crime.id] ?? t.home.hero.subtitle;
 
   return (
     <div className="lg:col-span-7 flex flex-col items-start text-left min-w-0">
@@ -31,18 +36,19 @@ export function HeroContent() {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-        className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-extrabold text-white leading-[1.08] tracking-tight font-dynamic wrap-break-word"
+        className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-extrabold text-white leading-[1.08] tracking-tight font-dynamic wrap-break-word"
       >
         {headline}
       </motion.h1>
 
       <motion.p
-        initial={{ opacity: 0, y: 30 }}
+        key={slideIndex}
+        initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-        className="mt-4 sm:mt-6 md:mt-8 text-base sm:text-lg md:text-xl text-white/70 max-w-xl font-light leading-relaxed"
+        transition={{ duration: 0.3, ease: "easeOut" }}
+        className="mt-4 sm:mt-6 md:mt-8 text-base sm:text-lg md:text-xl text-white max-w-xl font-medium leading-relaxed"
       >
-        {t.home.hero.subtitle}
+        {paragraph}
       </motion.p>
 
       <motion.div

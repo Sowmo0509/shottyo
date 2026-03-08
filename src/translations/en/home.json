@@ -3,7 +3,14 @@
   "description": "Public-facing documentation of incidents, victims, timelines, and case status in Bangladesh.",
   "hero": {
     "tagline": "Justice Tracker",
-    "subtitle": "We document incidents and court verdicts across all 64 districts. Follow each case from report to verdict — so nothing stays in the dark. An open resource for truth and accountability."
+    "headline": "We count. We remember. We don't forget.",
+    "subtitle": "In Bangladesh, 3 rape cases are filed every day—ones we forget. So that we don't forget.",
+    "paragraphs": {
+      "rape": "In Bangladesh, an average of 3 rape cases are filed every day—most of which we forget. We document each incident. We follow every case from report to verdict. So that none stay in the dark.",
+      "extortion": "In Bangladesh, an average of 8–9 extortion cases are filed every day. We track the numbers and keep sources and outcomes on record. So there is accountability and so we don't forget.",
+      "murder": "In Bangladesh, more than 11 murder cases are filed every day on average. We document each case from filing to verdict. An open resource for truth and justice.",
+      "kidnapping": "In Bangladesh, an average of 2–3 kidnapping cases are filed every day. We record each incident and track data by district and division. So that no case is forgotten and transparency is maintained."
+    }
   },
   "mission": {
     "heading": "Why we track",
