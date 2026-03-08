@@ -48,7 +48,7 @@ export default async function Home() {
       
       <TestimonialsSection />
 
-      <section id="incidents" aria-label="All Incidents" className="bg-muted/10 border-y border-border/50">
+      <section id="incidents" aria-label="All Incidents" className="bg-muted/10 border-y border-border/50 overflow-x-hidden">
         <IncidentList incidents={remainingIncidents.length > 0 ? remainingIncidents : null} />
       </section>
       

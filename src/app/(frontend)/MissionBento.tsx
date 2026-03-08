@@ -59,42 +59,42 @@ export function MissionBento({ incidents }: Props) {
   const verdicts = getWithVerdicts(incidents);
 
   return (
-    <section className="py-24 md:py-32 bg-background relative overflow-hidden">
-      <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-7xl relative z-10">
+    <section className="py-16 sm:py-24 md:py-32 bg-background relative overflow-hidden">
+      <div className="container mx-auto px-4 sm:px-5 md:px-6 lg:px-8 max-w-7xl relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-16 md:mb-24 flex flex-col md:flex-row md:items-end justify-between gap-8"
+          className="mb-12 sm:mb-16 md:mb-24 flex flex-col md:flex-row md:items-end justify-between gap-6 sm:gap-8"
         >
-          <div className="max-w-2xl">
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-foreground mb-6 font-dynamic">
+          <div className="max-w-2xl min-w-0">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-foreground mb-4 sm:mb-6 font-dynamic">
               {mission.heading}
             </h2>
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed">
               We aggregate reports, track court proceedings, and document outcomes to ensure transparency.
             </p>
           </div>
-          <div className="flex gap-8">
+          <div className="flex flex-wrap gap-6 sm:gap-8">
             <div className="flex flex-col">
-              <span className="text-4xl md:text-5xl font-bold text-primary tabular-nums tracking-tighter">
+              <span className="text-3xl sm:text-4xl md:text-5xl font-bold text-primary tabular-nums tracking-tighter">
                 <AnimatedNumber value={count} />
               </span>
-              <span className="text-sm font-medium text-muted-foreground uppercase tracking-wider mt-2">{stats.incidents}</span>
+              <span className="text-xs sm:text-sm font-medium text-muted-foreground uppercase tracking-wider mt-1 sm:mt-2">{stats.incidents}</span>
             </div>
-            <div className="w-px bg-border h-16 self-center hidden sm:block" />
+            <div className="w-px bg-border h-12 sm:h-16 self-center hidden sm:block" />
             <div className="flex flex-col">
-              <span className="text-4xl md:text-5xl font-bold text-primary tabular-nums tracking-tighter">
+              <span className="text-3xl sm:text-4xl md:text-5xl font-bold text-primary tabular-nums tracking-tighter">
                 <AnimatedNumber value={districts} />
               </span>
-              <span className="text-sm font-medium text-muted-foreground uppercase tracking-wider mt-2">{stats.districts}</span>
+              <span className="text-xs sm:text-sm font-medium text-muted-foreground uppercase tracking-wider mt-1 sm:mt-2">{stats.districts}</span>
             </div>
           </div>
         </motion.div>
 
         {/* Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-[320px]">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-6 auto-rows-[minmax(260px,auto)] md:auto-rows-[320px]">
           {/* Card 1: Document (Large, Span 8) */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -112,7 +112,7 @@ export function MissionBento({ incidents }: Props) {
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-background via-background/90 to-background/20" />
               </div>
-              <CardContent className="relative h-full p-8 md:p-12 flex flex-col justify-end">
+              <CardContent className="relative h-full p-6 sm:p-8 md:p-12 flex flex-col justify-end">
                 <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-primary-foreground font-bold text-xl mb-6 shadow-lg group-hover:scale-110 transition-transform duration-500">
                   {mission.document.title.charAt(0)}
                 </div>
@@ -139,7 +139,7 @@ export function MissionBento({ incidents }: Props) {
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-primary via-primary/50 to-transparent" />
               </div>
-              <CardContent className="relative h-full p-8 md:p-10 flex flex-col">
+              <CardContent className="relative h-full p-6 sm:p-8 md:p-10 flex flex-col">
                 <div className="flex-1">
                   <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-white/20 text-white font-bold text-xl mb-6 group-hover:scale-110 transition-transform duration-500">
                     {mission.track.title.charAt(0)}
@@ -162,8 +162,8 @@ export function MissionBento({ incidents }: Props) {
             className="md:col-span-4"
           >
             <Card className="h-full bg-muted/30 border-border/50 hover:bg-muted/50 transition-colors duration-500">
-              <CardContent className="h-full flex flex-col justify-center items-center text-center p-8">
-                <span className="text-7xl font-extrabold text-foreground tabular-nums tracking-tighter mb-4">
+              <CardContent className="h-full flex flex-col justify-center items-center text-center p-6 sm:p-8">
+                <span className="text-5xl sm:text-6xl md:text-7xl font-extrabold text-foreground tabular-nums tracking-tighter mb-3 sm:mb-4">
                   <AnimatedNumber value={verdicts} />
                 </span>
                 <span className="text-sm font-bold text-primary uppercase tracking-widest">{stats.verdicts}</span>
@@ -181,8 +181,8 @@ export function MissionBento({ incidents }: Props) {
           >
             <Card className="h-full border-border/50 shadow-sm hover:shadow-xl hover:border-primary/30 transition-all duration-500 group overflow-hidden relative bg-card">
               <div className="absolute inset-0 bg-linear-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <CardContent className="h-full p-8 flex flex-col justify-between relative z-10">
-                <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-secondary text-secondary-foreground font-bold mb-6 group-hover:scale-110 transition-transform duration-500">
+              <CardContent className="h-full p-6 sm:p-8 flex flex-col justify-between relative z-10">
+                <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-secondary text-secondary-foreground font-bold mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-500">
                   {mission.accountability.title.charAt(0)}
                 </div>
                 <div>

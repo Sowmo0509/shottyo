@@ -40,24 +40,24 @@ export function ProcessSection() {
   ];
 
   return (
-    <section className="py-24 md:py-32 bg-muted/30">
-      <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-7xl">
+    <section className="py-16 sm:py-24 md:py-32 bg-muted/30">
+      <div className="container mx-auto px-4 sm:px-5 md:px-6 lg:px-8 max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-16 md:mb-24 text-center max-w-3xl mx-auto"
+          className="mb-12 sm:mb-16 md:mb-24 text-center max-w-3xl mx-auto"
         >
-          <span className="inline-flex items-center justify-center px-4 py-1.5 mb-6 text-sm font-semibold tracking-widest uppercase rounded-full bg-primary/10 text-primary">
+          <span className="inline-flex items-center justify-center px-3 sm:px-4 py-1.5 mb-4 sm:mb-6 text-xs sm:text-sm font-semibold tracking-widest uppercase rounded-full bg-primary/10 text-primary">
             {language === "bn" ? "আমাদের প্রক্রিয়া" : "How it Works"}
           </span>
-          <Heading variant="h2" className="text-4xl md:text-5xl font-bold tracking-tight text-foreground font-dynamic">
+          <Heading variant="h2" className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-foreground font-dynamic">
             {language === "bn" ? "আমরা কীভাবে কাজ করি" : "The Journey to Transparency"}
           </Heading>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 relative">
           {/* Connecting line for desktop */}
           <div className="hidden md:block absolute top-12 left-[15%] right-[15%] h-[2px] bg-border z-0" />
 
@@ -74,7 +74,7 @@ export function ProcessSection() {
                 <div className="absolute -top-8 left-8 md:left-1/2 md:-translate-x-1/2 w-16 h-16 rounded-2xl bg-primary text-primary-foreground flex items-center justify-center shadow-lg transform rotate-3 hover:rotate-0 transition-transform duration-300">
                   <step.icon className="w-8 h-8" />
                 </div>
-                <CardContent className="pt-14 p-8 flex flex-col h-full text-left md:text-center">
+                <CardContent className="pt-14 p-6 sm:p-8 flex flex-col h-full text-left md:text-center">
                   <div className="text-primary/20 text-5xl font-black mb-4 font-mono">{step.id}</div>
                   <h3 className="text-2xl font-bold text-foreground mb-4 font-dynamic">{step.title}</h3>
                   <Text variant="muted" className="leading-relaxed">

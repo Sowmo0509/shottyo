@@ -14,7 +14,7 @@ export function LandingCta() {
   const cta = t.home.cta;
 
   return (
-    <section aria-labelledby="cta-heading" className="relative py-24 md:py-32 overflow-hidden">
+    <section aria-labelledby="cta-heading" className="relative py-16 sm:py-24 md:py-32 overflow-hidden">
       <div className="absolute inset-0">
         <img
           src={CTA_IMAGE}
@@ -28,7 +28,7 @@ export function LandingCta() {
         />
         <div className="absolute inset-0 bg-black/40" aria-hidden />
       </div>
-      <div className="relative z-10 container mx-auto px-4 md:px-6 lg:px-8 max-w-3xl text-center">
+      <div className="relative z-10 container mx-auto px-4 sm:px-5 md:px-6 lg:px-8 max-w-3xl text-center">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -38,7 +38,7 @@ export function LandingCta() {
           <Heading
             id="cta-heading"
             variant="h2"
-            className="mb-5 text-white text-3xl md:text-4xl lg:text-5xl font-bold font-dynamic"
+            className="mb-4 sm:mb-5 text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-dynamic"
           >
             {cta.heading}
           </Heading>

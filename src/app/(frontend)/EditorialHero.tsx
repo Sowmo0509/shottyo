@@ -42,7 +42,7 @@ type Props = {
   totalCount?: number;
 };
 
-export function EditorialHero({ featuredIncident, totalCount = 0 }: Props) {
+export function EditorialHero({ totalCount = 0 }: Props) {
   const { t, language } = useTranslation();
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -56,58 +56,52 @@ export function EditorialHero({ featuredIncident, totalCount = 0 }: Props) {
   const headline = language === "bn" ? "সত্য প্রকাশ। ন্যায়বিচার প্রতিষ্ঠা।" : "Uncovering Truth. Demanding Justice.";
 
   return (
-    <section ref={ref} className="relative min-h-[90vh] md:min-h-[95vh] w-full flex flex-col justify-center overflow-hidden bg-black">
+    <section ref={ref} className="relative min-h-dvh md:min-h-[95vh] w-full flex flex-col justify-center overflow-hidden bg-black">
       {/* Parallax Background */}
       <motion.div style={{ y, opacity }} className="absolute inset-0 w-full h-full">
-        <video 
-          autoPlay 
-          loop 
-          muted 
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-luminosity"
-        >
+        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-luminosity">
           <source src="/videos/hero.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-linear-to-b from-black/40 via-black/80 to-red-500/80" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.8)_100%)]" />
       </motion.div>
 
-      <div className="relative z-10 container mx-auto px-4 md:px-6 lg:px-8 mt-20 md:mt-32">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+      <div className="relative z-10 container mx-auto px-4 sm:px-5 md:px-6 lg:px-8 pt-24 pb-12 sm:pt-28 sm:pb-16 md:mt-0 md:pt-32 md:pb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-8 items-center">
           {/* Typographic Left Side */}
-          <div className="lg:col-span-7 flex flex-col items-start text-left">
-            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }} className="mb-8">
-              <Badge variant="outline" className="bg-white/10 text-white border-white/20 py-1.5 px-4 gap-2">
-                <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+          <div className="lg:col-span-7 flex flex-col items-start text-left min-w-0">
+            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }} className="mb-4 sm:mb-6 md:mb-8">
+              <Badge variant="outline" className="bg-white/10 text-white border-white/20 py-1 px-3 sm:py-1.5 sm:px-4 gap-1.5 sm:gap-2 text-xs sm:text-sm">
+                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-red-500 animate-pulse shrink-0" />
                 <span className="tracking-widest uppercase">{language === "bn" ? "লাইভ ট্র্যাকিং" : "Live Tracking"}</span>
               </Badge>
             </motion.div>
 
-            <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }} className="text-5xl md:text-7xl lg:text-8xl font-extrabold text-white leading-[1.05] tracking-tight font-dynamic">
+            <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }} className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-extrabold text-white leading-[1.08] tracking-tight font-dynamic wrap-break-word">
               {headline}
             </motion.h1>
 
-            <motion.p initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }} className="mt-6 md:mt-8 text-lg md:text-xl text-white/70 max-w-xl font-light leading-relaxed">
+            <motion.p initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }} className="mt-4 sm:mt-6 md:mt-8 text-base sm:text-lg md:text-xl text-white/70 max-w-xl font-light leading-relaxed">
               {t.home.hero.subtitle}
             </motion.p>
 
-            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }} className="mt-10 flex flex-wrap gap-4">
-              <Button asChild size="lg" className="rounded-full px-8 h-14 text-base font-semibold shadow-xl">
+            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }} className="mt-6 sm:mt-8 md:mt-10 flex flex-wrap gap-3 sm:gap-4">
+              <Button asChild size="lg" className="rounded-full px-6 sm:px-8 h-12 sm:h-14 text-sm sm:text-base font-semibold shadow-xl w-full sm:w-auto">
                 <Link href="#incidents">{t.home.incidentsSection.viewAll}</Link>
               </Button>
             </motion.div>
           </div>
 
           {/* Stats Right Side */}
-          <motion.div initial={{ opacity: 0, scale: 0.9, x: 20 }} animate={{ opacity: 1, scale: 1, x: 0 }} transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }} className="lg:col-span-5 relative">
-            <div className="grid gap-4 sm:grid-cols-2 h-full">
+          <motion.div initial={{ opacity: 0, scale: 0.9, x: 20 }} animate={{ opacity: 1, scale: 1, x: 0 }} transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }} className="lg:col-span-5 relative min-w-0">
+            <div className="grid gap-3 sm:gap-4 sm:grid-cols-2 h-full">
               {/* Stat 1: Rape Incidents (Progress Bar) */}
-              <div className="rounded-3xl bg-white/5 border border-white/10 p-6 backdrop-blur-sm flex flex-col justify-between shadow-2xl">
+              <div className="rounded-2xl sm:rounded-3xl bg-white/5 border border-white/10 p-4 sm:p-6 backdrop-blur-sm flex flex-col justify-between shadow-2xl min-w-0">
                 <div>
-                  <div className="text-4xl font-black text-white mb-1 tabular-nums tracking-tight">
+                  <div className="text-3xl sm:text-4xl font-black text-white mb-1 tabular-nums tracking-tight">
                     <AnimatedCounter value={110} duration={2} language={language} />
                   </div>
-                  <div className="text-white/90 text-sm font-bold uppercase tracking-wider mb-6 leading-relaxed">{language === "bn" ? "গত ৬৭ দিনে ধর্ষণের ঘটনা" : "Rape incidents in 67 days"}</div>
+                  <div className="text-white/90 text-xs sm:text-sm font-bold uppercase tracking-wider mb-4 sm:mb-6 leading-relaxed">{language === "bn" ? "গত ৬৭ দিনে ধর্ষণের ঘটনা" : "Rape incidents in 67 days"}</div>
                 </div>
                 <div className="w-full">
                   <div className="flex justify-between text-[10px] text-white/50 font-mono mb-2 uppercase tracking-widest">
@@ -121,12 +115,12 @@ export function EditorialHero({ featuredIncident, totalCount = 0 }: Props) {
               </div>
 
               {/* Stat 2: Fire Blasts (Progress Bar) */}
-              <div className="rounded-3xl bg-white/5 border border-white/10 p-6 backdrop-blur-sm flex flex-col justify-between shadow-2xl">
+              <div className="rounded-2xl sm:rounded-3xl bg-white/5 border border-white/10 p-4 sm:p-6 backdrop-blur-sm flex flex-col justify-between shadow-2xl min-w-0">
                 <div>
-                  <div className="text-4xl font-black text-white mb-1 tabular-nums tracking-tight">
+                  <div className="text-3xl sm:text-4xl font-black text-white mb-1 tabular-nums tracking-tight">
                     <AnimatedCounter value={7} duration={1.5} language={language} />
                   </div>
-                  <div className="text-white/90 text-sm font-bold uppercase tracking-wider mb-6 leading-relaxed">{language === "bn" ? "গত মাসে অগ্নিকাণ্ডের ঘটনা" : "Fire blasts in the last month"}</div>
+                  <div className="text-white/90 text-xs sm:text-sm font-bold uppercase tracking-wider mb-4 sm:mb-6 leading-relaxed">{language === "bn" ? "গত মাসে অগ্নিকাণ্ডের ঘটনা" : "Fire blasts in the last month"}</div>
                 </div>
                 <div className="w-full">
                   <div className="flex justify-between text-[10px] text-white/50 font-mono mb-2 uppercase tracking-widest">
@@ -140,17 +134,17 @@ export function EditorialHero({ featuredIncident, totalCount = 0 }: Props) {
               </div>
 
               {/* Total Incidents: Multi-segment progress bar */}
-              <Link href="#incidents" className="rounded-3xl bg-white/5 border border-white/10 p-6 backdrop-blur-sm sm:col-span-2 relative overflow-hidden group hover:border-primary/50 transition-colors duration-500 block shadow-2xl">
+              <Link href="#incidents" className="rounded-2xl sm:rounded-3xl bg-white/5 border border-white/10 p-4 sm:p-6 backdrop-blur-sm sm:col-span-2 relative overflow-hidden group hover:border-primary/50 transition-colors duration-500 block shadow-2xl min-w-0">
                 <div className="absolute inset-0 bg-linear-to-tr from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <div className="relative z-10">
-                  <div className="flex items-start justify-between mb-8">
-                    <div>
-                      <div className="text-5xl md:text-6xl font-black text-white mb-1 tabular-nums tracking-tighter">
+                  <div className="flex items-start justify-between gap-4 mb-6 sm:mb-8">
+                    <div className="min-w-0">
+                      <div className="text-4xl sm:text-5xl md:text-6xl font-black text-white mb-1 tabular-nums tracking-tighter">
                         <AnimatedCounter value={totalCount} duration={2.5} language={language} />
                       </div>
-                      <div className="text-white/90 text-base font-bold uppercase tracking-wider">{language === "bn" ? "মোট নথিভুক্ত ঘটনা" : "Total documented incidents"}</div>
+                      <div className="text-white/90 text-sm sm:text-base font-bold uppercase tracking-wider">{language === "bn" ? "মোট নথিভুক্ত ঘটনা" : "Total documented incidents"}</div>
                     </div>
-                    <div className="flex items-center justify-center w-12 h-12 rounded-full bg-white/10 text-white group-hover:bg-primary transition-colors shrink-0">
+                    <div className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 text-white group-hover:bg-primary transition-colors shrink-0">
                       <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                       </svg>

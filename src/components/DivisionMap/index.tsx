@@ -269,13 +269,13 @@ export function DivisionMap({ incidents }: Props) {
   const lineLayerThemed = useMemo(() => ({ ...lineLayer, paint: { ...lineLayer.paint, "line-color": lineColor } }), [lineColor]);
 
   return (
-    <Card className="mb-8 overflow-hidden bg-background/50 border-muted">
-      <CardHeader className="flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div className="flex flex-col">
-          <CardTitle className="text-xl font-semibold">{language === "bn" ? (viewType === "division" ? "বিভাগ অনুযায়ী ঘটনা" : "জেলা অনুযায়ী ঘটনা") : viewType === "division" ? "Incidents by Division" : "Incidents by District"}</CardTitle>
+    <Card className="mb-6 sm:mb-8 overflow-hidden bg-background/50 border-muted">
+      <CardHeader className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4 p-4 sm:p-6">
+        <div className="flex flex-col min-w-0">
+          <CardTitle className="text-base sm:text-xl font-semibold">{language === "bn" ? (viewType === "division" ? "বিভাগ অনুযায়ী ঘটনা" : "জেলা অনুযায়ী ঘটনা") : viewType === "division" ? "Incidents by Division" : "Incidents by District"}</CardTitle>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-4">
           <div className="flex items-center space-x-2 bg-muted/50 px-3 py-1.5 rounded-full border border-muted">
             <Label htmlFor="view-mode" className="text-xs font-medium cursor-pointer">
               {language === "bn" ? "বিভাগ" : "Division"}
@@ -305,8 +305,8 @@ export function DivisionMap({ incidents }: Props) {
         </div>
       </CardHeader>
       <CardContent>
-        <div className="flex flex-col lg:flex-row gap-4">
-          <div className="flex-1 w-full aspect-square min-h-[280px] max-h-[70vh] rounded-lg overflow-hidden">
+        <div className="flex flex-col lg:flex-row gap-4 px-2 sm:px-0">
+          <div className="flex-1 w-full min-w-0 aspect-square min-h-[240px] sm:min-h-[280px] max-h-[60vh] sm:max-h-[70vh] rounded-lg overflow-hidden">
             {!styledGeoJson ? (
               <div className="flex items-center justify-center h-full text-muted-foreground text-sm bg-muted/30">Loading map…</div>
             ) : (
