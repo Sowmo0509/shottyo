@@ -32,3 +32,15 @@ pnpm run seed:sanity
 Or with `npm run seed:sanity` / `yarn seed:sanity`.
 
 The script loads `.env.local` automatically when run from the project root. It creates 5 sample incidents (with EN/BN titles and descriptions), assigns random divisions/districts, and adds victims and timeline events to each. You can run it again anytime; it replaces the same seeded documents so you won’t get duplicates.
+
+## Delete all Sanity data (`delete-all-sanity.ts`)
+
+Removes every document in the dataset (except Sanity system documents like schema). **This cannot be undone** unless you have a backup.
+
+Same env as seed: `NEXT_PUBLIC_SANITY_PROJECT_ID`, `NEXT_PUBLIC_SANITY_DATASET`, `SANITY_API_WRITE_TOKEN` in `.env.local` or the environment.
+
+```bash
+pnpm run delete:sanity
+```
+
+Or `npm run delete:sanity` / `npx tsx scripts/delete-all-sanity.ts`. The script prints how many documents will be deleted and asks for confirmation (`y`/`N`) before proceeding. Deletions are done in batches of 100.
