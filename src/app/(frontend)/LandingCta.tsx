@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useTranslation } from "@/hooks/useTranslation";
 import { Heading, Text } from "@/components/ui/typography";
 import { motion } from "motion/react";
+import { Button } from "@/components/ui/button";
 
 const CTA_IMAGE =
   "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=85&w=1920&auto=format&fit=crop";
@@ -22,9 +23,10 @@ export function LandingCta() {
           aria-hidden
         />
         <div
-          className="absolute inset-0 bg-linear-to-b from-black/75 via-black/60 to-black/80"
+          className="absolute inset-0 bg-linear-to-b from-primary/90 via-primary/80 to-background/95 mix-blend-multiply"
           aria-hidden
         />
+        <div className="absolute inset-0 bg-black/40" aria-hidden />
       </div>
       <div className="relative z-10 container mx-auto px-4 md:px-6 lg:px-8 max-w-3xl text-center">
         <motion.div
@@ -36,13 +38,13 @@ export function LandingCta() {
           <Heading
             id="cta-heading"
             variant="h2"
-            className="mb-5 text-white text-3xl md:text-4xl lg:text-5xl font-bold"
+            className="mb-5 text-white text-3xl md:text-4xl lg:text-5xl font-bold font-dynamic"
           >
             {cta.heading}
           </Heading>
           <Text
             variant="lead"
-            className="text-white/90 text-lg md:text-xl text-balance mb-10 max-w-2xl mx-auto"
+            className="text-white/80 text-lg md:text-xl text-balance mb-10 max-w-2xl mx-auto"
           >
             {cta.body}
           </Text>
@@ -52,12 +54,11 @@ export function LandingCta() {
             viewport={{ once: true }}
             transition={{ delay: 0.2, duration: 0.5 }}
           >
-            <Link
-              href="/#incidents"
-              className="inline-flex items-center justify-center rounded-full bg-white px-10 py-4 text-base font-semibold text-black shadow-lg hover:bg-white/95 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
-            >
-              {t.home.incidentsSection.viewAll}
-            </Link>
+            <Button asChild size="lg" className="rounded-full bg-white text-primary hover:bg-white/90 hover:scale-105 active:scale-95 transition-all shadow-xl h-14 px-10 text-base">
+              <Link href="/#incidents">
+                {t.home.incidentsSection.viewAll}
+              </Link>
+            </Button>
           </motion.div>
         </motion.div>
       </div>

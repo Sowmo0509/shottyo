@@ -3,8 +3,13 @@ import { incidentApi } from "@/lib/api";
 import { EditorialHero } from "./EditorialHero";
 import { MissionBento } from "./MissionBento";
 import { RecentIncidents } from "./RecentIncidents";
+import { ProcessSection } from "./ProcessSection";
+import { TestimonialsSection } from "./TestimonialsSection";
+import { FaqSection } from "./FaqSection";
 import { LandingCta } from "./LandingCta";
 import { Footer } from "./Footer";
+import { MapSection } from "./MapSection";
+import { generateDummyIncidents } from "@/lib/dummyData";
 
 export const revalidate = 60; // Revalidate every 60 seconds
 
@@ -16,7 +21,12 @@ export default async function Home() {
     console.error("Failed to fetch incidents:", error);
   }
 
-  const allIncidents = incidents || [];
+  // Fallback to rich dummy data if empty for demonstration
+  let allIncidents = incidents || [];
+  if (allIncidents.length === 0) {
+    allIncidents = generateDummyIncidents(12);
+  }
+
   const featuredIncident = allIncidents[0];
   const recentIncidents = allIncidents.slice(1, 5);
   const remainingIncidents = allIncidents.slice(5);
@@ -29,11 +39,19 @@ export default async function Home() {
         <RecentIncidents incidents={[featuredIncident, ...recentIncidents].filter(Boolean)} />
       )}
       
+      <MapSection incidents={allIncidents} />
+      
       <MissionBento incidents={allIncidents} />
       
-      <section id="incidents" aria-label="All Incidents" className="bg-muted/30">
+      <ProcessSection />
+      
+      <TestimonialsSection />
+
+      <section id="incidents" aria-label="All Incidents" className="bg-muted/10 border-y border-border/50">
         <IncidentList incidents={remainingIncidents.length > 0 ? remainingIncidents : null} />
       </section>
+      
+      <FaqSection />
       
       <LandingCta />
       <Footer />

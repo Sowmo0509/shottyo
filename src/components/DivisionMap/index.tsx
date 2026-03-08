@@ -269,7 +269,7 @@ export function DivisionMap({ incidents }: Props) {
   const lineLayerThemed = useMemo(() => ({ ...lineLayer, paint: { ...lineLayer.paint, "line-color": lineColor } }), [lineColor]);
 
   return (
-    <Card className="mb-8 overflow-hidden bg-background/50 backdrop-blur-sm border-muted">
+    <Card className="mb-8 overflow-hidden bg-background/50 border-muted">
       <CardHeader className="flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="flex flex-col">
           <CardTitle className="text-xl font-semibold">{language === "bn" ? (viewType === "division" ? "বিভাগ অনুযায়ী ঘটনা" : "জেলা অনুযায়ী ঘটনা") : viewType === "division" ? "Incidents by Division" : "Incidents by District"}</CardTitle>
@@ -322,7 +322,7 @@ export function DivisionMap({ incidents }: Props) {
 
           {selectedRegion && (
             <div className="lg:w-72 w-full flex flex-col gap-2 animate-in slide-in-from-right-4 duration-300" style={{ maxHeight: 460, overflowY: "auto" }}>
-              <div className="sticky top-0 pb-2 bg-background/80 backdrop-blur-sm z-10">
+              <div className="sticky top-0 pb-2 bg-background/80 z-10">
                 <h3 className="font-semibold text-base">{selectedRegion}</h3>
                 <p className="text-xs text-muted-foreground">
                   {selectedIncidents.length} {language === "bn" ? "টি ঘটনা" : selectedIncidents.length === 1 ? "incident" : "incidents"}
