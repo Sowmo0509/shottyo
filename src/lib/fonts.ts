@@ -1,6 +1,6 @@
-import { Inter_Tight, Geist_Mono, Noto_Serif_Bengali } from "next/font/google";
+import { Manrope, Geist_Mono, Noto_Serif_Bengali } from "next/font/google";
 
-export const fontSans = Inter_Tight({
+export const fontSans = Manrope({
   variable: "--font-sans",
   subsets: ["latin"],
 });
