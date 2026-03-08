@@ -9,6 +9,7 @@ import { FaqSection } from "./FaqSection";
 import { LandingCta } from "./LandingCta";
 import { Footer } from "./Footer";
 import { MapSection } from "./MapSection";
+import { InvestigationNoticeSection } from "./InvestigationNoticeSection";
 import { generateDummyIncidents } from "@/lib/dummyData";
 
 export const revalidate = 60; // Revalidate every 60 seconds
@@ -34,7 +35,7 @@ export default async function Home() {
   return (
     <div className="min-h-screen flex flex-col bg-background selection:bg-primary selection:text-primary-foreground">
       <EditorialHero featuredIncident={featuredIncident} totalCount={allIncidents.length} />
-      
+      <InvestigationNoticeSection />
       {recentIncidents.length > 0 && (
         <RecentIncidents incidents={[featuredIncident, ...recentIncidents].filter(Boolean)} />
       )}

@@ -5,7 +5,6 @@ import { motion, useInView } from "motion/react";
 import { useRef, useEffect, useState } from "react";
 import type { Incident } from "@/types";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 
 function getUniqueDistricts(incidents: Incident[] | null): number {
   if (!incidents?.length) return 0;
@@ -149,14 +148,6 @@ export function MissionBento({ incidents }: Props) {
                 <div>
                   <h3 className="text-3xl font-bold mb-4 font-dynamic">{mission.track.title}</h3>
                   <p className="text-primary-foreground/90 text-lg leading-relaxed">{mission.track.body}</p>
-                </div>
-                {/* Future Feature Placeholder */}
-                <div className="mt-8 pt-8 border-t border-white/20">
-                  <span className="text-xs font-bold uppercase tracking-widest text-white/70 mb-3 block">Coming Soon</span>
-                  <p className="text-sm text-primary-foreground/80 mb-4">Interactive division map with real-time district data.</p>
-                  <Button variant="secondary" className="w-full bg-white text-primary hover:bg-white/90">
-                    Preview Map
-                  </Button>
                 </div>
               </CardContent>
             </Card>
