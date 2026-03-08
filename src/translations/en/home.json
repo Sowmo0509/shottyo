@@ -1,4 +1,39 @@
 {
   "title": "Justice Tracker",
-  "description": "Public-facing documentation of incidents, victims, timelines, and case status in Bangladesh."
+  "description": "Public-facing documentation of incidents, victims, timelines, and case status in Bangladesh.",
+  "hero": {
+    "tagline": "Justice Tracker",
+    "subtitle": "Documenting incidents and court outcomes across all 64 districts."
+  },
+  "mission": {
+    "heading": "Why we track",
+    "document": {
+      "title": "Document",
+      "body": "We record incidents with dates, locations, and sources so nothing is forgotten."
+    },
+    "track": {
+      "title": "Track",
+      "body": "Follow each case from report to verdict across divisions and districts."
+    },
+    "accountability": {
+      "title": "Accountability",
+      "body": "Transparent timelines and outcomes help communities seek justice."
+    }
+  },
+  "stats": {
+    "incidents": "Incidents documented",
+    "districts": "Districts covered",
+    "verdicts": "Cases with verdicts"
+  },
+  "incidentsSection": {
+    "heading": "Recent incidents",
+    "viewAll": "View all incidents"
+  },
+  "cta": {
+    "heading": "Stay informed",
+    "body": "Browse incidents by district and status. Share this resource with others who care about accountability."
+  },
+  "footer": {
+    "tagline": "সত্য — Justice Tracker for Bangladesh"
+  }
 }
