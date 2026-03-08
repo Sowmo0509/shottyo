@@ -4,7 +4,7 @@ import { format } from "date-fns";
 import { motion } from "motion/react";
 import { Heading, Text } from "@/components/ui/typography";
 import { fadeIn } from "./variants";
-import { getLocalized } from "./utils";
+import { getLocalized, getDescriptionText } from "./utils";
 import type { TimelineEvent } from "./types";
 
 interface IncidentTimelineDetailsProps {
@@ -46,7 +46,7 @@ export function IncidentTimelineDetails({
         <div className="space-y-16">
           {timeline.map((event) => {
             const eventTitle = getLocalized(event.title, language);
-            const eventDesc = getLocalized(event.description, language);
+            const eventDesc = getDescriptionText(event.description, language);
 
             return (
               <motion.div

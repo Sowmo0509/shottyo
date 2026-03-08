@@ -7,6 +7,7 @@ import { format } from "date-fns";
 import { urlFor } from "@/sanity/lib/image";
 import { motion } from "motion/react";
 import { convertToBengaliDigits } from "@/lib/utils";
+import { getDescriptionPlainText } from "@/lib/portableText";
 
 interface Props {
   incident: Incident;
@@ -30,9 +31,7 @@ export function IncidentCard({ incident, index = 0, featured = false }: Props) {
 
   const title = language === "bn" && incident.title.bn ? incident.title.bn : incident.title.en;
   const description =
-    language === "bn" && incident.description?.bn
-      ? incident.description.bn
-      : incident.description?.en || t.common.incidents.noDescription;
+    getDescriptionPlainText(incident.description, language) || t.common.incidents.noDescription;
 
   return (
     <motion.div

@@ -2,7 +2,7 @@
 
 import { useTranslation } from "@/hooks/useTranslation";
 import { Incident } from "@/types";
-import { getLocalized } from "./utils";
+import { getLocalized, getDescriptionText, getDescriptionBlocksForLanguage } from "./utils";
 import { IncidentArticleHeader } from "./IncidentArticleHeader";
 import { IncidentDescription } from "./IncidentDescription";
 import { IncidentGallery } from "./IncidentGallery";
@@ -26,7 +26,9 @@ export function IncidentDetail({ incident }: IncidentDetailProps) {
     );
   }
 
-  const description = getLocalized(incident.description, language);
+  const descriptionBlocks = getDescriptionBlocksForLanguage(incident.description, language);
+  const descriptionPlain = getDescriptionText(incident.description, language);
+  const hasDescription = (descriptionBlocks && descriptionBlocks.length > 0) || descriptionPlain.length > 0;
   const verdict = getLocalized(incident.verdict, language);
   const hasTimeline = incident.timeline && incident.timeline.length > 0;
 
@@ -40,9 +42,9 @@ export function IncidentDetail({ incident }: IncidentDetailProps) {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
         <div className="lg:col-span-8 space-y-16">
-          {description && (
+          {hasDescription && (
             <IncidentDescription
-              description={description}
+              description={descriptionBlocks && descriptionBlocks.length > 0 ? descriptionBlocks : descriptionPlain}
               language={language}
             />
           )}

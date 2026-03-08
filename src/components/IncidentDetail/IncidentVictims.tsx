@@ -4,7 +4,7 @@ import { motion } from "motion/react";
 import { User } from "lucide-react";
 import { Heading, Text } from "@/components/ui/typography";
 import { fadeIn, staggerContainer } from "./variants";
-import { getLocalized } from "./utils";
+import { getLocalized, getDescriptionText } from "./utils";
 import type { Victim } from "./types";
 
 interface IncidentVictimsProps {
@@ -39,7 +39,7 @@ export function IncidentVictims({
       <div className="divide-y divide-border/30">
         {victims.map((victim) => {
           const victimName = getLocalized(victim.name, language);
-          const victimDesc = getLocalized(victim.description, language);
+          const victimDesc = getDescriptionText(victim.description, language);
 
           return (
             <motion.div

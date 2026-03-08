@@ -8,6 +8,12 @@ export type LocalizedText = {
   bn?: string;
 };
 
+/** Rich text from Sanity (portable text). Description fields may use this. */
+export type LocalizedBlockContent = {
+  en?: unknown[];
+  bn?: unknown[];
+};
+
 export type AccusedRole = "culprit" | "suspect" | "convicted" | "accused";
 export type AccusedStatus = "at_large" | "arrested" | "convicted" | "acquitted" | "deceased" | "other";
 
@@ -16,7 +22,7 @@ export interface AccusedPerson {
   name: LocalizedString;
   role?: AccusedRole;
   age?: number;
-  description?: LocalizedText;
+  description?: LocalizedText | LocalizedBlockContent;
   status?: AccusedStatus;
   image?: unknown;
 }
@@ -25,7 +31,7 @@ export interface Incident {
   _id: string;
   title: LocalizedString;
   slug: { current: string };
-  description?: LocalizedText;
+  description?: LocalizedText | LocalizedBlockContent;
   dateOfIncident: string;
   location?: LocalizedString;
   division: string;
@@ -45,7 +51,7 @@ export interface Victim {
   age?: number;
   incident: { _ref: string };
   status: "deceased" | "injured" | "missing" | "safe" | "arrested" | "other";
-  description?: LocalizedText;
+  description?: LocalizedText | LocalizedBlockContent;
   image?: unknown;
 }
 
@@ -53,7 +59,7 @@ export interface TimelineEvent {
   _id: string;
   incident: { _ref: string };
   title: LocalizedString;
-  description?: LocalizedText;
+  description?: LocalizedText | LocalizedBlockContent;
   date: string;
   eventType: "update" | "action" | "verdict" | "other";
 }

@@ -21,7 +21,7 @@ export const timelineEvent = defineType({
     defineField({
       name: "description",
       title: "Description",
-      type: "localeText",
+      type: "localeBlockContent",
     }),
     defineField({
       name: "date",

@@ -1,5 +1,7 @@
 import type { LocalizedString, LocalizedText } from "@/types";
 import type { IncidentDetailTranslation } from "./types";
+import { getDescriptionPlainText, getDescriptionBlocks } from "@/lib/portableText";
+import type { PortableTextBlock } from "@/lib/portableText";
 
 export function getLocalized(
   value: LocalizedString | LocalizedText | undefined,
@@ -7,6 +9,22 @@ export function getLocalized(
 ): string {
   if (!value) return "";
   return language === "bn" && value.bn ? value.bn : value.en ?? "";
+}
+
+/** Get description as plain text. Works for both legacy (string) and rich (block) content. */
+export function getDescriptionText(
+  value: { en?: string | unknown[]; bn?: string | unknown[] } | undefined,
+  language: string
+): string {
+  return getDescriptionPlainText(value as { en?: string | PortableTextBlock[]; bn?: string | PortableTextBlock[] }, language);
+}
+
+/** Get description as blocks for rich rendering. Returns null if legacy string or empty. */
+export function getDescriptionBlocksForLanguage(
+  value: { en?: unknown; bn?: unknown } | undefined,
+  language: string
+): PortableTextBlock[] | null {
+  return getDescriptionBlocks(value, language);
 }
 
 export function getFirstGrapheme(

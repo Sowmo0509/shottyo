@@ -26,7 +26,7 @@ export const incident = defineType({
     defineField({
       name: "description",
       title: "Description",
-      type: "localeText",
+      type: "localeBlockContent",
     }),
     defineField({
       name: "dateOfIncident",
@@ -104,7 +104,7 @@ export const incident = defineType({
               name: "name",
               title: "Name",
               type: "localeString",
-              validation: (Rule: { required: () => unknown }) => Rule.required(),
+              validation: (Rule) => Rule.required(),
             },
             {
               name: "role",
@@ -129,7 +129,7 @@ export const incident = defineType({
             {
               name: "description",
               title: "Description",
-              type: "localeText",
+              type: "localeBlockContent",
             },
             {
               name: "status",

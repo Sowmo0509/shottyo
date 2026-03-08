@@ -43,7 +43,7 @@ export const victim = defineType({
     defineField({
       name: "description",
       title: "Description",
-      type: "localeText",
+      type: "localeBlockContent",
     }),
     defineField({
       name: "image",
