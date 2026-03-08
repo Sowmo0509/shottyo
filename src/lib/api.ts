@@ -23,6 +23,7 @@ export const incidentApi = {
       verdict
     }`;
     const incidents = await client.fetch<Incident[]>(query);
+    console.log("[incidentApi.getAll] response:", { count: incidents?.length ?? 0, data: incidents });
     return incidents;
   },
 
@@ -35,6 +36,7 @@ export const incidentApi = {
       }
     }`;
     const result = await client.fetch(query, { slug });
+    console.log("[incidentApi.getBySlug]", { slug, found: !!result?.incident, data: result?.incident ?? null });
     return result.incident || null;
   },
 };
