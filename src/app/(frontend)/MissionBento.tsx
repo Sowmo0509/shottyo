@@ -5,6 +5,7 @@ import { motion, useInView } from "motion/react";
 import { useRef, useEffect, useState } from "react";
 import type { Incident } from "@/types";
 import { Card, CardContent } from "@/components/ui/card";
+import { convertToBengaliDigits } from "@/lib/utils";
 
 function getUniqueDistricts(incidents: Incident[] | null): number {
   if (!incidents?.length) return 0;
@@ -17,7 +18,7 @@ function getWithVerdicts(incidents: Incident[] | null): number {
   return incidents.filter((i) => i.verdict && (i.verdict.en || i.verdict.bn)).length;
 }
 
-function AnimatedNumber({ value, duration = 1.5 }: { value: number; duration?: number }) {
+function AnimatedNumber({ value, duration = 1.5, language = "en" }: { value: number; duration?: number; language?: string }) {
   const [display, setDisplay] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.5 });
@@ -37,7 +38,8 @@ function AnimatedNumber({ value, duration = 1.5 }: { value: number; duration?: n
     requestAnimationFrame(step);
   }, [inView, value, duration]);
 
-  return <span ref={ref}>{display}</span>;
+  const formatted = language === "bn" ? convertToBengaliDigits(display) : display;
+  return <span ref={ref}>{formatted}</span>;
 }
 
 type Props = {
@@ -50,7 +52,7 @@ const BENTO_IMAGES = {
 };
 
 export function MissionBento({ incidents }: Props) {
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
   const mission = t.home.mission;
   const stats = t.home.stats;
 
@@ -79,14 +81,14 @@ export function MissionBento({ incidents }: Props) {
           <div className="flex flex-wrap gap-6 sm:gap-8">
             <div className="flex flex-col">
               <span className="text-3xl sm:text-4xl md:text-5xl font-bold text-primary tabular-nums tracking-tighter">
-                <AnimatedNumber value={count} />
+                <AnimatedNumber value={count} duration={1.5} language={language} />
               </span>
               <span className="text-xs sm:text-sm font-medium text-muted-foreground uppercase tracking-wider mt-1 sm:mt-2">{stats.incidents}</span>
             </div>
             <div className="w-px bg-border h-12 sm:h-16 self-center hidden sm:block" />
             <div className="flex flex-col">
               <span className="text-3xl sm:text-4xl md:text-5xl font-bold text-primary tabular-nums tracking-tighter">
-                <AnimatedNumber value={districts} />
+                <AnimatedNumber value={districts} duration={1.5} language={language} />
               </span>
               <span className="text-xs sm:text-sm font-medium text-muted-foreground uppercase tracking-wider mt-1 sm:mt-2">{stats.districts}</span>
             </div>
@@ -164,7 +166,7 @@ export function MissionBento({ incidents }: Props) {
             <Card className="h-full bg-muted/30 border-border/50 hover:bg-muted/50 transition-colors duration-500">
               <CardContent className="h-full flex flex-col justify-center items-center text-center p-6 sm:p-8">
                 <span className="text-5xl sm:text-6xl md:text-7xl font-extrabold text-foreground tabular-nums tracking-tighter mb-3 sm:mb-4">
-                  <AnimatedNumber value={verdicts} />
+                  <AnimatedNumber value={verdicts} duration={1.5} language={language} />
                 </span>
                 <span className="text-sm font-bold text-primary uppercase tracking-widest">{stats.verdicts}</span>
               </CardContent>

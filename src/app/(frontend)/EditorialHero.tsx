@@ -7,11 +7,7 @@ import { useRef, useEffect, useState } from "react";
 import type { Incident } from "@/types";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-
-function convertToBengaliDigits(numberStr: string | number): string {
-  const bengaliDigits = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
-  return numberStr.toString().replace(/\d/g, (digit) => bengaliDigits[parseInt(digit, 10)]);
-}
+import { convertToBengaliDigits } from "@/lib/utils";
 
 function AnimatedCounter({ value, duration = 2, language = "en" }: { value: number; duration?: number; language?: string }) {
   const [display, setDisplay] = useState(0);
@@ -156,10 +152,10 @@ export function EditorialHero({ totalCount = 0 }: Props) {
                     <div className="flex justify-between text-xs text-white/60 font-mono">
                       <div className="flex items-center gap-2">
                         <span className="w-2 h-2 rounded-full bg-red-500" />
-                        <span>{language === "bn" ? "তদন্তাধীন" : "Investigating"} 76%</span>
+                        <span>{language === "bn" ? "তদন্তাধীন" : "Investigating"} {language === "bn" ? convertToBengaliDigits("76") : "76"}%</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <span>{language === "bn" ? "মীমাংসিত" : "Resolved"} 24%</span>
+                        <span>{language === "bn" ? "মীমাংসিত" : "Resolved"} {language === "bn" ? convertToBengaliDigits("24") : "24"}%</span>
                         <span className="w-2 h-2 rounded-full bg-emerald-500" />
                       </div>
                     </div>

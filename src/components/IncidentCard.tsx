@@ -6,6 +6,7 @@ import Link from "next/link";
 import { format } from "date-fns";
 import { urlFor } from "@/sanity/lib/image";
 import { motion } from "motion/react";
+import { convertToBengaliDigits } from "@/lib/utils";
 
 interface Props {
   incident: Incident;
@@ -81,7 +82,9 @@ export function IncidentCard({ incident, index = 0, featured = false }: Props) {
             {getStatusLabel(incident.status)}
           </span>
           <span className="text-sm font-medium text-muted-foreground">
-            {format(new Date(incident.dateOfIncident), "MMM d, yyyy")}
+            {language === "bn"
+              ? convertToBengaliDigits(format(new Date(incident.dateOfIncident), "MMM d, yyyy"))
+              : format(new Date(incident.dateOfIncident), "MMM d, yyyy")}
           </span>
         </div>
 

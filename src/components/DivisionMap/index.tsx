@@ -16,6 +16,7 @@ import { Label } from "@/components/ui/label";
 import { useAppStore } from "@/store/useAppStore";
 import { Incident } from "@/types";
 
+import { convertToBengaliDigits } from "@/lib/utils";
 import { DIVISION_CENTERS, DEFAULT_CENTER, COLOR_STEPS, STATUS_STYLES } from "./constants";
 import { getDivisionFromField, getDistrictFromField, getDistrictKeyForMap, getColorByCount } from "./utils";
 
@@ -325,7 +326,7 @@ export function DivisionMap({ incidents }: Props) {
               <div className="sticky top-0 pb-2 bg-background/80 z-10">
                 <h3 className="font-semibold text-base">{selectedRegion}</h3>
                 <p className="text-xs text-muted-foreground">
-                  {selectedIncidents.length} {language === "bn" ? "টি ঘটনা" : selectedIncidents.length === 1 ? "incident" : "incidents"}
+                  {language === "bn" ? convertToBengaliDigits(selectedIncidents.length) : selectedIncidents.length} {language === "bn" ? "টি ঘটনা" : selectedIncidents.length === 1 ? "incident" : "incidents"}
                 </p>
                 <div className="flex flex-wrap gap-1.5 mt-2">
                   {(["open", "pending", "closed"] as const).map((status) => {
@@ -334,7 +335,7 @@ export function DivisionMap({ incidents }: Props) {
                     const s = STATUS_STYLES[status];
                     return (
                       <span key={status} className={`inline-flex items-center gap-1 text-[10px] font-medium px-2 py-0.5 rounded-full ${s.bg} ${s.text}`}>
-                        {c} {language === "bn" ? s.labelBn : s.label}
+                        {language === "bn" ? convertToBengaliDigits(c) : c} {language === "bn" ? s.labelBn : s.label}
                       </span>
                     );
                   })}
@@ -353,7 +354,15 @@ export function DivisionMap({ incidents }: Props) {
                         <p className="text-sm font-medium leading-snug line-clamp-2">{title}</p>
                         <div className="flex items-center gap-2 mt-1.5">
                           <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${s.bg} ${s.text}`}>{language === "bn" ? s.labelBn : s.label}</span>
-                          {incident.dateOfIncident && <span className="text-[10px] text-muted-foreground">{new Date(incident.dateOfIncident).toLocaleDateString(language === "bn" ? "bn-BD" : "en-US", { year: "numeric", month: "short", day: "numeric" })}</span>}
+                          {incident.dateOfIncident && (
+                          <span className="text-[10px] text-muted-foreground">
+                            {language === "bn"
+                              ? convertToBengaliDigits(
+                                  new Date(incident.dateOfIncident).toLocaleDateString("bn-BD", { year: "numeric", month: "short", day: "numeric" })
+                                )
+                              : new Date(incident.dateOfIncident).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}
+                          </span>
+                        )}
                         </div>
                       </li>
                     );
@@ -374,7 +383,7 @@ export function DivisionMap({ incidents }: Props) {
           <div className="flex w-full mt-1.5">
             {legendLabels.map((label, i) => (
               <div key={i} className="flex-1 text-center text-[10px] text-muted-foreground leading-none">
-                {label}
+                {language === "bn" ? convertToBengaliDigits(label) : label}
               </div>
             ))}
           </div>
