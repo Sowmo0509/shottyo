@@ -55,11 +55,14 @@ export function EditorialHero({ totalCount = 0 }: Props) {
     <section ref={ref} className="relative min-h-dvh md:min-h-[95vh] w-full flex flex-col justify-center overflow-hidden bg-black">
       {/* Parallax Background */}
       <motion.div style={{ y, opacity }} className="absolute inset-0 w-full h-full">
-        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-luminosity">
-          <source src="/videos/hero.mp4" type="video/mp4" />
-        </video>
-        <div className="absolute inset-0 bg-linear-to-b from-black/40 via-black/80 to-red-500/80" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.8)_100%)]" />
+        <img
+          src="/images/dark_bg.jpg"
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover object-right"
+          aria-hidden
+        />
+        <div className="absolute inset-0 bg-linear-to-b from-black/40 via-black/70 to-red-500/80" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.75)_100%)]" />
       </motion.div>
 
       <div className="relative z-10 container mx-auto px-4 sm:px-5 md:px-6 lg:px-8 pt-24 pb-12 sm:pt-28 sm:pb-16 md:mt-0 md:pt-32 md:pb-20">
@@ -91,79 +94,120 @@ export function EditorialHero({ totalCount = 0 }: Props) {
           {/* Stats Right Side */}
           <motion.div initial={{ opacity: 0, scale: 0.9, x: 20 }} animate={{ opacity: 1, scale: 1, x: 0 }} transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }} className="lg:col-span-5 relative min-w-0">
             <div className="grid gap-3 sm:gap-4 sm:grid-cols-2 h-full">
-              {/* Stat 1: Rape Incidents (Progress Bar) */}
-              <div className="rounded-2xl sm:rounded-3xl bg-white/5 border border-white/10 p-4 sm:p-6 backdrop-blur-sm flex flex-col justify-between shadow-2xl min-w-0">
-                <div>
-                  <div className="text-3xl sm:text-4xl font-black text-white mb-1 tabular-nums tracking-tight">
-                    <AnimatedCounter value={110} duration={2} language={language} />
-                  </div>
-                  <div className="text-white/90 text-xs sm:text-sm font-bold uppercase tracking-wider mb-4 sm:mb-6 leading-relaxed">{language === "bn" ? "গত ৬৭ দিনে ধর্ষণের ঘটনা" : "Rape incidents in 67 days"}</div>
+              {/* Rape cases filed: 2025 vs 2024 — meaningful bar comparison */}
+              <div className="rounded-2xl sm:rounded-3xl bg-white/5 border border-white/10 p-4 sm:p-6 backdrop-blur-sm flex flex-col shadow-2xl min-w-0 sm:col-span-2">
+                <div className="text-white/90 text-xs sm:text-sm font-bold uppercase tracking-wider mb-4">
+                  {language === "bn" ? "ধর্ষণ মামলা দায়ের (বাংলাদেশ)" : "Rape cases filed (Bangladesh)"}
                 </div>
-                <div className="w-full">
-                  <div className="flex justify-between text-[10px] text-white/50 font-mono mb-2 uppercase tracking-widest">
-                    <span>Critical</span>
-                    <span>High</span>
+                <div className="space-y-4 flex-1">
+                  {/* 2025 bar */}
+                  <div>
+                    <div className="flex justify-between items-baseline gap-2 mb-1.5">
+                      <span className="text-white/60 text-xs font-medium">{language === "bn" ? convertToBengaliDigits("2025") : "2025"}</span>
+                      <span className="text-2xl sm:text-3xl font-black text-white tabular-nums tracking-tight">
+                        <AnimatedCounter value={7068} duration={2} language={language} />
+                      </span>
+                    </div>
+                    <div className="relative h-3 w-full bg-white/10 rounded-full overflow-hidden">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        whileInView={{ width: "100%" }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1.2, delay: 0.5, ease: "easeOut" }}
+                        className="absolute inset-y-0 left-0 h-full bg-red-500 rounded-full"
+                      />
+                    </div>
                   </div>
-                  <div className="relative h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
-                    <motion.div initial={{ width: 0 }} whileInView={{ width: "85%" }} viewport={{ once: true }} transition={{ duration: 1.5, delay: 0.6, ease: "easeOut" }} className="absolute top-0 left-0 h-full bg-red-500 rounded-full" />
+                  {/* 2024 bar */}
+                  <div>
+                    <div className="flex justify-between items-baseline gap-2 mb-1.5">
+                      <span className="text-white/60 text-xs font-medium">{language === "bn" ? convertToBengaliDigits("2024") : "2024"}</span>
+                      <span className="text-xl sm:text-2xl font-black text-white/90 tabular-nums tracking-tight">
+                        <AnimatedCounter value={2024} duration={2} language={language} />
+                      </span>
+                    </div>
+                    <div className="relative h-3 w-full bg-white/10 rounded-full overflow-hidden">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        whileInView={{ width: "28.65%" }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1.2, delay: 0.7, ease: "easeOut" }}
+                        className="absolute inset-y-0 left-0 h-full bg-white/40 rounded-full"
+                      />
+                    </div>
                   </div>
                 </div>
+                <p className="text-white/50 text-[10px] sm:text-xs mt-3 font-medium">
+                  {language === "bn" ? "২০২৪ থেকে ২০২৫ পর্যন্ত প্রায় ২.৫ গুণ বৃদ্ধি" : "~2.5× increase from 2024 to 2025"}
+                </p>
               </div>
 
-              {/* Stat 2: Fire Blasts (Progress Bar) */}
-              <div className="rounded-2xl sm:rounded-3xl bg-white/5 border border-white/10 p-4 sm:p-6 backdrop-blur-sm flex flex-col justify-between shadow-2xl min-w-0">
-                <div>
-                  <div className="text-3xl sm:text-4xl font-black text-white mb-1 tabular-nums tracking-tight">
-                    <AnimatedCounter value={7} duration={1.5} language={language} />
-                  </div>
-                  <div className="text-white/90 text-xs sm:text-sm font-bold uppercase tracking-wider mb-4 sm:mb-6 leading-relaxed">{language === "bn" ? "গত মাসে অগ্নিকাণ্ডের ঘটনা" : "Fire blasts in the last month"}</div>
+              {/* Cases not solved — attention-grabbing */}
+              <div className="rounded-2xl sm:rounded-3xl bg-red-950/40 border border-red-500/30 p-4 sm:p-6 backdrop-blur-sm flex flex-col shadow-2xl min-w-0 sm:col-span-2">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="flex h-2 w-2 rounded-full bg-amber-400 shrink-0" aria-hidden />
+                  <span className="text-amber-200/95 text-xs sm:text-sm font-bold uppercase tracking-wider">
+                    {language === "bn" ? "মামলা নিষ্পত্তি হয়নি" : "Cases not solved"}
+                  </span>
                 </div>
-                <div className="w-full">
-                  <div className="flex justify-between text-[10px] text-white/50 font-mono mb-2 uppercase tracking-widest">
-                    <span>Recent</span>
-                    <span>Surge</span>
+                <div className="grid grid-cols-2 gap-4 sm:gap-6">
+                  <div>
+                    <span className="text-white/60 text-[10px] sm:text-xs font-medium block mb-0.5">{language === "bn" ? convertToBengaliDigits("2025") : "2025"}</span>
+                    <span className="text-2xl sm:text-3xl font-black text-white tabular-nums tracking-tight">
+                      <AnimatedCounter value={5847} duration={2} language={language} />
+                    </span>
+                    <span className="text-white/50 text-[10px] block mt-0.5">
+                      {language === "bn" ? "বিচারবহির্ভূত" : "awaiting justice"}
+                    </span>
                   </div>
-                  <div className="relative h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
-                    <motion.div initial={{ width: 0 }} whileInView={{ width: "60%" }} viewport={{ once: true }} transition={{ duration: 1.5, delay: 0.8, ease: "easeOut" }} className="absolute top-0 left-0 h-full bg-orange-500 rounded-full" />
+                  <div>
+                    <span className="text-white/60 text-[10px] sm:text-xs font-medium block mb-0.5">{language === "bn" ? convertToBengaliDigits("2024") : "2024"}</span>
+                    <span className="text-2xl sm:text-3xl font-black text-white tabular-nums tracking-tight">
+                      <AnimatedCounter value={1618} duration={2} language={language} />
+                    </span>
+                    <span className="text-white/50 text-[10px] block mt-0.5">
+                      {language === "bn" ? "বিচারবহির্ভূত" : "awaiting justice"}
+                    </span>
                   </div>
                 </div>
+                <p className="text-amber-200/80 text-[10px] sm:text-xs font-semibold mt-3 pt-3 border-t border-red-500/20">
+                  {language === "bn" ? "অধিকাংশ মামলার রায় হয়নি — আমরা নজর রাখছি।" : "Most cases still without verdict — we're tracking."}
+                </p>
               </div>
 
-              {/* Total Incidents: Multi-segment progress bar */}
-              <Link href="#incidents" className="rounded-2xl sm:rounded-3xl bg-white/5 border border-white/10 p-4 sm:p-6 backdrop-blur-sm sm:col-span-2 relative overflow-hidden group hover:border-primary/50 transition-colors duration-500 block shadow-2xl min-w-0">
+              {/* Year-on-year change — single clear stat */}
+              <div className="rounded-2xl sm:rounded-3xl bg-white/5 border border-white/10 p-4 sm:p-6 backdrop-blur-sm flex flex-col justify-center items-center text-center shadow-2xl min-w-0">
+                <span className="text-white/70 text-xs sm:text-sm font-bold uppercase tracking-wider mb-2">
+                  {language === "bn" ? "বছর-ওভার-বছর বৃদ্ধি" : "Year-on-year increase"}
+                </span>
+                <span className="text-3xl sm:text-4xl font-black text-red-400 tabular-nums">
+                  <AnimatedCounter value={249} duration={1.5} language={language} />%
+                </span>
+                <span className="text-white/60 text-xs mt-1">{language === "bn" ? `${convertToBengaliDigits("2024")} → ${convertToBengaliDigits("2025")}` : "2024 → 2025"}</span>
+              </div>
+
+              {/* Total documented on our platform */}
+              <Link href="#incidents" className="rounded-2xl sm:rounded-3xl bg-white/5 border border-white/10 p-4 sm:p-6 backdrop-blur-sm relative overflow-hidden group hover:border-primary/50 transition-colors duration-500 flex flex-col justify-center shadow-2xl min-w-0">
                 <div className="absolute inset-0 bg-linear-to-tr from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="relative z-10">
-                  <div className="flex items-start justify-between gap-4 mb-6 sm:mb-8">
-                    <div className="min-w-0">
-                      <div className="text-4xl sm:text-5xl md:text-6xl font-black text-white mb-1 tabular-nums tracking-tighter">
-                        <AnimatedCounter value={totalCount} duration={2.5} language={language} />
-                      </div>
-                      <div className="text-white/90 text-sm sm:text-base font-bold uppercase tracking-wider">{language === "bn" ? "মোট নথিভুক্ত ঘটনা" : "Total documented incidents"}</div>
+                <div className="relative z-10 flex items-center justify-between gap-4">
+                  <div className="min-w-0">
+                    <div className="text-2xl sm:text-3xl font-black text-white tabular-nums tracking-tighter">
+                      <AnimatedCounter value={totalCount} duration={2.5} language={language} />
                     </div>
-                    <div className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 text-white group-hover:bg-primary transition-colors shrink-0">
-                      <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                      </svg>
+                    <div className="text-white/80 text-xs sm:text-sm font-bold uppercase tracking-wider mt-0.5">
+                      {language === "bn" ? "নথিভুক্ত ঘটনা (এই প্ল্যাটফর্ম)" : "Documented on this platform"}
                     </div>
                   </div>
-
-                  {/* Multi-segment Progress Bar */}
-                  <div className="space-y-3">
-                    <div className="flex justify-between text-xs text-white/60 font-mono">
-                      <div className="flex items-center gap-2">
-                        <span className="w-2 h-2 rounded-full bg-red-500" />
-                        <span>{language === "bn" ? "তদন্তাধীন" : "Investigating"} {language === "bn" ? convertToBengaliDigits("76") : "76"}%</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span>{language === "bn" ? "মীমাংসিত" : "Resolved"} {language === "bn" ? convertToBengaliDigits("24") : "24"}%</span>
-                        <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                      </div>
-                    </div>
-                    <div className="relative h-2.5 w-full bg-white/10 rounded-full overflow-hidden flex">
-                      <motion.div initial={{ width: 0 }} whileInView={{ width: "76%" }} viewport={{ once: true }} transition={{ duration: 1.5, delay: 1, ease: "easeOut" }} className="h-full bg-red-500" />
-                      <motion.div initial={{ width: 0 }} whileInView={{ width: "24%" }} viewport={{ once: true }} transition={{ duration: 1.5, delay: 1, ease: "easeOut" }} className="h-full bg-emerald-500" />
-                    </div>
+                  <div className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 text-white group-hover:bg-primary transition-colors shrink-0">
+                    <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
                   </div>
+                </div>
+                {/* Status breakdown: meaningful platform stats */}
+                <div className="relative z-10 mt-4 pt-4 border-t border-white/10 flex justify-between text-[10px] sm:text-xs text-white/60">
+                  <span>{language === "bn" ? "তদন্তাধীন" : "Investigating"} {language === "bn" ? convertToBengaliDigits("76") : "76"}%</span>
+                  <span>{language === "bn" ? "মীমাংসিত" : "Resolved"} {language === "bn" ? convertToBengaliDigits("24") : "24"}%</span>
                 </div>
               </Link>
             </div>
