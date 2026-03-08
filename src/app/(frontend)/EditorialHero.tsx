@@ -5,8 +5,6 @@ import { useTranslation } from "@/hooks/useTranslation";
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
 import type { Incident } from "@/types";
-import { urlFor } from "@/sanity/lib/image";
-import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
@@ -65,49 +63,41 @@ export function EditorialHero({ featuredIncident, totalCount = 0 }: Props) {
             </motion.div>
           </div>
 
-          {/* Featured Incident Right Side */}
-          {featuredIncident && (
-            <motion.div initial={{ opacity: 0, scale: 0.9, x: 20 }} animate={{ opacity: 1, scale: 1, x: 0 }} transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }} className="lg:col-span-5 relative">
-              <Link href={`/incident/${featuredIncident.slug.current}`} className="group relative block rounded-3xl bg-black border border-white/10 p-2 overflow-hidden hover:border-primary/50 transition-colors duration-500 shadow-2xl">
+          {/* Stats Right Side */}
+          <motion.div initial={{ opacity: 0, scale: 0.9, x: 20 }} animate={{ opacity: 1, scale: 1, x: 0 }} transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }} className="lg:col-span-5 relative">
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="rounded-3xl bg-white/5 border border-white/10 p-8 backdrop-blur-sm">
+                <div className="text-4xl md:text-5xl font-bold text-white mb-2">110</div>
+                <div className="text-white/70 text-sm leading-relaxed">
+                  {language === "bn" ? "গত ৬৭ দিনে ধর্ষণের ঘটনা" : "Rape incidents in the last 67 days"}
+                </div>
+              </div>
+              
+              <div className="rounded-3xl bg-white/5 border border-white/10 p-8 backdrop-blur-sm">
+                <div className="text-4xl md:text-5xl font-bold text-white mb-2">7</div>
+                <div className="text-white/70 text-sm leading-relaxed">
+                  {language === "bn" ? "গত মাসে অগ্নিকাণ্ডের ঘটনা" : "Fire blast incidents in the last month"}
+                </div>
+              </div>
+
+              <Link href="#incidents" className="rounded-3xl bg-white/5 border border-white/10 p-8 backdrop-blur-sm sm:col-span-2 relative overflow-hidden group hover:border-primary/50 transition-colors duration-500 block">
                 <div className="absolute inset-0 bg-linear-to-tr from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                <div className="aspect-4/5 md:aspect-square relative rounded-2xl overflow-hidden bg-white/5">
-                  {featuredIncident.images && featuredIncident.images.length > 0 ? (
-                    <img
-                      src={urlFor(featuredIncident.images[0] as any)
-                        .width(800)
-                        .url()}
-                      alt=""
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center bg-white/5">
-                      <span className="text-white/40">{t.common.incidents.noImage}</span>
+                <div className="relative z-10 flex items-center justify-between">
+                  <div>
+                    <div className="text-4xl md:text-5xl font-bold text-white mb-2">{totalCount}</div>
+                    <div className="text-white/70 text-sm leading-relaxed">
+                      {language === "bn" ? "মোট নথিভুক্ত ঘটনা" : "Total documented incidents"}
                     </div>
-                  )}
-
-                  {/* Inner Content Overlay */}
-                  <div className="absolute inset-0 bg-linear-to-t from-black/95 via-black/60 to-transparent p-6 md:p-8 flex flex-col justify-end">
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      <Badge className="bg-primary hover:bg-primary text-primary-foreground border-none">{language === "bn" ? "সর্বশেষ" : "Latest"}</Badge>
-                      <Badge variant="secondary" className="bg-white/10 hover:bg-white/20 text-white border-none">
-                        {format(new Date(featuredIncident.dateOfIncident), "MMM d, yyyy")}
-                      </Badge>
-                    </div>
-
-                    <h3 className="text-2xl md:text-3xl font-bold text-white leading-tight mb-2 group-hover:text-primary transition-colors line-clamp-3">{language === "bn" && featuredIncident.title.bn ? featuredIncident.title.bn : featuredIncident.title.en}</h3>
-
-                    <div className="mt-4 flex items-center text-white/70 text-sm font-medium group-hover:text-white transition-colors">
-                      {language === "bn" ? "বিস্তারিত পড়ুন" : "Read Full Report"}
-                      <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                      </svg>
-                    </div>
+                  </div>
+                  <div className="hidden sm:flex items-center justify-center w-12 h-12 rounded-full bg-white/10 text-white group-hover:bg-primary transition-colors">
+                    <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
                   </div>
                 </div>
               </Link>
-            </motion.div>
-          )}
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>
