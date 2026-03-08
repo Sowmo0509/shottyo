@@ -41,9 +41,7 @@ if (!projectId || !dataset) {
 }
 
 if (!token) {
-  console.error(
-    "Missing SANITY_API_WRITE_TOKEN. Create a token at https://sanity.io/manage (Project → API → Tokens) with Editor or Admin permissions."
-  );
+  console.error("Missing SANITY_API_WRITE_TOKEN. Create a token at https://sanity.io/manage (Project → API → Tokens) with Editor or Admin permissions.");
   process.exit(1);
 }
 
@@ -104,7 +102,7 @@ const INCIDENTS = [
     title: { en: "Protest Incident and Police Response in Rajshahi", bn: "রাজশাহীতে বিক্ষোভ ও পুলিশি প্রতিক্রিয়া" },
     description: {
       en: "A public protest turned violent. Several injured. Shottyo Watchdog is documenting the sequence of events and official response.",
-      bn: "একটি জনসমাবেশে সহিংসতা ছড়িয়ে পড়ে। কয়েকজন আহত। শট্টিও ওয়াচডগ ঘটনাক্রম ও সরকারি প্রতিক্রিয়া নথিভুক্ত করছে।",
+      bn: "একটি জনসমাবেশে সহিংসতা ছড়িয়ে পড়ে। কয়েকজন আহত। সত্য ওয়াচডগ ঘটনাক্রম ও সরকারি প্রতিক্রিয়া নথিভুক্ত করছে।",
     },
     location: { en: "Rajshahi City Corporation area", bn: "রাজশাহী সিটি কর্পোরেশন অঞ্চল" },
     status: "open" as const,

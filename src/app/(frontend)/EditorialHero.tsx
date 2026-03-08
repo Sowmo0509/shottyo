@@ -2,13 +2,40 @@
 
 import Link from "next/link";
 import { useTranslation } from "@/hooks/useTranslation";
-import { motion, useScroll, useTransform } from "motion/react";
-import { useRef } from "react";
+import { motion, useScroll, useTransform, useInView } from "motion/react";
+import { useRef, useEffect, useState } from "react";
 import type { Incident } from "@/types";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
-const HERO_IMAGE = "https://images.unsplash.com/photo-1457732815361-daa98277e9c8?q=85&w=2340&auto=format&fit=crop";
+function convertToBengaliDigits(numberStr: string | number): string {
+  const bengaliDigits = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
+  return numberStr.toString().replace(/\d/g, (digit) => bengaliDigits[parseInt(digit, 10)]);
+}
+
+function AnimatedCounter({ value, duration = 2, language = "en" }: { value: number; duration?: number; language?: string }) {
+  const [display, setDisplay] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true });
+
+  useEffect(() => {
+    if (!inView) return;
+    let start: number;
+    const step = (t: number) => {
+      if (!start) start = t;
+      const elapsed = (t - start) / 1000;
+      const progress = Math.min(elapsed / duration, 1);
+      const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+      setDisplay(Math.round(easeProgress * value));
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }, [inView, value, duration]);
+
+  const formattedDisplay = language === "bn" ? convertToBengaliDigits(display) : display;
+
+  return <span ref={ref}>{formattedDisplay}</span>;
+}
 
 type Props = {
   featuredIncident?: Incident | null;
@@ -32,8 +59,16 @@ export function EditorialHero({ featuredIncident, totalCount = 0 }: Props) {
     <section ref={ref} className="relative min-h-[90vh] md:min-h-[95vh] w-full flex flex-col justify-center overflow-hidden bg-black">
       {/* Parallax Background */}
       <motion.div style={{ y, opacity }} className="absolute inset-0 w-full h-full">
-        <div className="absolute inset-0 bg-cover bg-center opacity-30 mix-blend-luminosity" style={{ backgroundImage: `url(${HERO_IMAGE})` }} />
-        <div className="absolute inset-0 bg-linear-to-b from-black/40 via-black/80 to-red-500" />
+        <video 
+          autoPlay 
+          loop 
+          muted 
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-luminosity"
+        >
+          <source src="/videos/hero.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-linear-to-b from-black/40 via-black/80 to-red-500/80" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.8)_100%)]" />
       </motion.div>
 
@@ -65,34 +100,79 @@ export function EditorialHero({ featuredIncident, totalCount = 0 }: Props) {
 
           {/* Stats Right Side */}
           <motion.div initial={{ opacity: 0, scale: 0.9, x: 20 }} animate={{ opacity: 1, scale: 1, x: 0 }} transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }} className="lg:col-span-5 relative">
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div className="rounded-3xl bg-white/5 border border-white/10 p-8 backdrop-blur-sm">
-                <div className="text-4xl md:text-5xl font-bold text-white mb-2">110</div>
-                <div className="text-white/70 text-sm leading-relaxed">
-                  {language === "bn" ? "গত ৬৭ দিনে ধর্ষণের ঘটনা" : "Rape incidents in the last 67 days"}
+            <div className="grid gap-4 sm:grid-cols-2 h-full">
+              {/* Stat 1: Rape Incidents (Progress Bar) */}
+              <div className="rounded-3xl bg-white/5 border border-white/10 p-6 backdrop-blur-sm flex flex-col justify-between shadow-2xl">
+                <div>
+                  <div className="text-4xl font-black text-white mb-1 tabular-nums tracking-tight">
+                    <AnimatedCounter value={110} duration={2} language={language} />
+                  </div>
+                  <div className="text-white/90 text-sm font-bold uppercase tracking-wider mb-6 leading-relaxed">{language === "bn" ? "গত ৬৭ দিনে ধর্ষণের ঘটনা" : "Rape incidents in 67 days"}</div>
                 </div>
-              </div>
-              
-              <div className="rounded-3xl bg-white/5 border border-white/10 p-8 backdrop-blur-sm">
-                <div className="text-4xl md:text-5xl font-bold text-white mb-2">7</div>
-                <div className="text-white/70 text-sm leading-relaxed">
-                  {language === "bn" ? "গত মাসে অগ্নিকাণ্ডের ঘটনা" : "Fire blast incidents in the last month"}
+                <div className="w-full">
+                  <div className="flex justify-between text-[10px] text-white/50 font-mono mb-2 uppercase tracking-widest">
+                    <span>Critical</span>
+                    <span>High</span>
+                  </div>
+                  <div className="relative h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
+                    <motion.div initial={{ width: 0 }} whileInView={{ width: "85%" }} viewport={{ once: true }} transition={{ duration: 1.5, delay: 0.6, ease: "easeOut" }} className="absolute top-0 left-0 h-full bg-red-500 rounded-full" />
+                  </div>
                 </div>
               </div>
 
-              <Link href="#incidents" className="rounded-3xl bg-white/5 border border-white/10 p-8 backdrop-blur-sm sm:col-span-2 relative overflow-hidden group hover:border-primary/50 transition-colors duration-500 block">
+              {/* Stat 2: Fire Blasts (Progress Bar) */}
+              <div className="rounded-3xl bg-white/5 border border-white/10 p-6 backdrop-blur-sm flex flex-col justify-between shadow-2xl">
+                <div>
+                  <div className="text-4xl font-black text-white mb-1 tabular-nums tracking-tight">
+                    <AnimatedCounter value={7} duration={1.5} language={language} />
+                  </div>
+                  <div className="text-white/90 text-sm font-bold uppercase tracking-wider mb-6 leading-relaxed">{language === "bn" ? "গত মাসে অগ্নিকাণ্ডের ঘটনা" : "Fire blasts in the last month"}</div>
+                </div>
+                <div className="w-full">
+                  <div className="flex justify-between text-[10px] text-white/50 font-mono mb-2 uppercase tracking-widest">
+                    <span>Recent</span>
+                    <span>Surge</span>
+                  </div>
+                  <div className="relative h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
+                    <motion.div initial={{ width: 0 }} whileInView={{ width: "60%" }} viewport={{ once: true }} transition={{ duration: 1.5, delay: 0.8, ease: "easeOut" }} className="absolute top-0 left-0 h-full bg-orange-500 rounded-full" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Total Incidents: Multi-segment progress bar */}
+              <Link href="#incidents" className="rounded-3xl bg-white/5 border border-white/10 p-6 backdrop-blur-sm sm:col-span-2 relative overflow-hidden group hover:border-primary/50 transition-colors duration-500 block shadow-2xl">
                 <div className="absolute inset-0 bg-linear-to-tr from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="relative z-10 flex items-center justify-between">
-                  <div>
-                    <div className="text-4xl md:text-5xl font-bold text-white mb-2">{totalCount}</div>
-                    <div className="text-white/70 text-sm leading-relaxed">
-                      {language === "bn" ? "মোট নথিভুক্ত ঘটনা" : "Total documented incidents"}
+                <div className="relative z-10">
+                  <div className="flex items-start justify-between mb-8">
+                    <div>
+                      <div className="text-5xl md:text-6xl font-black text-white mb-1 tabular-nums tracking-tighter">
+                        <AnimatedCounter value={totalCount} duration={2.5} language={language} />
+                      </div>
+                      <div className="text-white/90 text-base font-bold uppercase tracking-wider">{language === "bn" ? "মোট নথিভুক্ত ঘটনা" : "Total documented incidents"}</div>
+                    </div>
+                    <div className="flex items-center justify-center w-12 h-12 rounded-full bg-white/10 text-white group-hover:bg-primary transition-colors shrink-0">
+                      <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                      </svg>
                     </div>
                   </div>
-                  <div className="hidden sm:flex items-center justify-center w-12 h-12 rounded-full bg-white/10 text-white group-hover:bg-primary transition-colors">
-                    <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
+
+                  {/* Multi-segment Progress Bar */}
+                  <div className="space-y-3">
+                    <div className="flex justify-between text-xs text-white/60 font-mono">
+                      <div className="flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-red-500" />
+                        <span>{language === "bn" ? "তদন্তাধীন" : "Investigating"} 76%</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span>{language === "bn" ? "মীমাংসিত" : "Resolved"} 24%</span>
+                        <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                      </div>
+                    </div>
+                    <div className="relative h-2.5 w-full bg-white/10 rounded-full overflow-hidden flex">
+                      <motion.div initial={{ width: 0 }} whileInView={{ width: "76%" }} viewport={{ once: true }} transition={{ duration: 1.5, delay: 1, ease: "easeOut" }} className="h-full bg-red-500" />
+                      <motion.div initial={{ width: 0 }} whileInView={{ width: "24%" }} viewport={{ once: true }} transition={{ duration: 1.5, delay: 1, ease: "easeOut" }} className="h-full bg-emerald-500" />
+                    </div>
                   </div>
                 </div>
               </Link>
