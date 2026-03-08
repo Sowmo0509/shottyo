@@ -25,7 +25,7 @@ export function IncidentVerdict({
         <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground block mb-4">
           {verdictLabel}
         </span>
-        <p className="text-2xl font-serif italic text-foreground/80 leading-relaxed">
+        <p className="text-2xl font-dynamic italic text-foreground/80 leading-relaxed">
           &quot;{verdict}&quot;
         </p>
       </div>

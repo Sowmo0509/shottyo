@@ -41,7 +41,7 @@ export function IncidentArticleHeader({
 
       <motion.h1
         variants={fadeIn}
-        className="text-4xl md:text-5xl lg:text-6xl font-serif font-medium tracking-tight text-foreground leading-[1.1] mb-8"
+        className="text-4xl md:text-5xl lg:text-6xl font-dynamic font-bold tracking-tight text-foreground leading-[1.1] mb-8"
       >
         {title}
       </motion.h1>

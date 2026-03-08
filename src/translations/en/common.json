@@ -14,9 +14,26 @@
     },
     "gallery": "Gallery",
     "victims": "Victims",
+    "accused": "Accused / Suspects",
     "timeline": "Timeline",
     "verdict": "Verdict",
     "age": "Age",
+    "role": "Role",
+    "legalStatus": "Legal status",
+    "accusedRole": {
+      "culprit": "Culprit",
+      "suspect": "Suspect",
+      "convicted": "Convicted",
+      "accused": "Accused"
+    },
+    "accusedStatus": {
+      "at_large": "At large",
+      "arrested": "Arrested",
+      "convicted": "Convicted",
+      "acquitted": "Acquitted",
+      "deceased": "Deceased",
+      "other": "Other"
+    },
     "failedToLoad": "Failed to load incident details."
   }
 }

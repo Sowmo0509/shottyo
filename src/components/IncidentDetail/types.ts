@@ -1,4 +1,4 @@
-import type { Incident, Victim, TimelineEvent } from "@/types";
+import type { Incident, Victim, TimelineEvent, AccusedPerson } from "@/types";
 
 export type IncidentDetailTranslation = {
   common: {
@@ -6,10 +6,15 @@ export type IncidentDetailTranslation = {
       failedToLoad: string;
       gallery: string;
       victims: string;
+      accused: string;
       age: string;
       verdict: string;
       timeline: string;
+      role: string;
+      legalStatus: string;
       status: { open: string; closed: string; inProgress: string };
+      accusedRole: Record<string, string>;
+      accusedStatus: Record<string, string>;
     };
   };
 };
@@ -20,4 +25,4 @@ export interface IncidentDetailContext {
   language: string;
 }
 
-export type { Incident, Victim, TimelineEvent };
+export type { Incident, Victim, TimelineEvent, AccusedPerson };

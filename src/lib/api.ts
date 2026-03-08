@@ -31,7 +31,15 @@ export const incidentApi = {
     const query = `{
       "incident": *[_type == "incident" && slug.current == $slug][0] {
         ...,
-        "victims": *[_type == "victim" && incident._ref == ^._id],
+        "victims": *[_type == "victim" && incident._ref == ^._id] {
+          _id,
+          name,
+          age,
+          incident,
+          status,
+          description,
+          image
+        },
         "timeline": *[_type == "timelineEvent" && incident._ref == ^._id] | order(date desc)
       }
     }`;

@@ -216,3 +216,19 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Incident description: news-style drop cap on first paragraph (rich text) */
+.incident-description-drop-cap > p:first-of-type::first-letter {
+  float: left;
+  font-size: 3.75rem;
+  line-height: 1;
+  margin-right: 0.75rem;
+  margin-top: 0.25rem;
+  font-family: inherit;
+  color: var(--color-primary);
+}
+@media (min-width: 768px) {
+  .incident-description-drop-cap > p:first-of-type::first-letter {
+    font-size: 4.5rem;
+  }
+}

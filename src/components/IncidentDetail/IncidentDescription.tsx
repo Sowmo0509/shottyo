@@ -16,7 +16,7 @@ interface IncidentDescriptionProps {
 const portableTextComponents = {
   block: {
     normal: ({ children }: { children?: React.ReactNode }) => (
-      <p className="mb-4 text-xl md:text-2xl leading-relaxed text-foreground/90 font-serif last:mb-0">
+      <p className="mb-4 text-xl md:text-2xl leading-relaxed text-foreground/90 font-dynamic last:mb-0">
         {children}
       </p>
     ),
@@ -47,7 +47,7 @@ export function IncidentDescription({
         whileInView="visible"
         viewport={{ once: true }}
         variants={fadeIn}
-        className="prose prose-lg max-w-none text-foreground/90 [&_p]:font-serif [&_p]:text-xl [&_p]:md:text-2xl [&_p]:leading-relaxed"
+        className="incident-description-drop-cap prose prose-lg max-w-none text-foreground/90 [&_p]:font-dynamic [&_p]:text-xl [&_p]:md:text-2xl [&_p]:leading-relaxed"
       >
         <PortableText value={description as PortableTextBlock[]} components={portableTextComponents} />
       </motion.div>
@@ -64,8 +64,8 @@ export function IncidentDescription({
       viewport={{ once: true }}
       variants={fadeIn}
     >
-      <Text className="text-xl md:text-2xl leading-relaxed text-foreground/90 font-serif">
-        <span className="float-left text-6xl md:text-7xl font-serif leading-none mr-3 mt-1 text-primary">
+      <Text className="text-xl md:text-2xl leading-relaxed text-foreground/90 font-dynamic">
+        <span className="float-left text-6xl md:text-7xl font-dynamic leading-none mr-3 mt-1 text-primary">
           {firstChar}
         </span>
         {rest}

@@ -28,7 +28,7 @@ export function IncidentTimelineSummary({
         <Heading
           as="h3"
           variant="h4"
-          className="font-serif italic mb-8 flex items-center gap-2"
+          className="font-dynamic italic mb-8 flex items-center gap-2"
         >
           {summaryLabel}
         </Heading>

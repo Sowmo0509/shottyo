@@ -14,9 +14,26 @@
     },
     "gallery": "গ্যালারি",
     "victims": "ক্ষতিগ্রস্তরা",
+    "accused": "অভিযুক্ত / সন্দেহভাজন",
     "timeline": "ঘটনাক্রম",
     "verdict": "রায় / সমাপ্তি",
     "age": "বয়স",
+    "role": "ভূমিকা",
+    "legalStatus": "আইনি অবস্থা",
+    "accusedRole": {
+      "culprit": "অপরাধী",
+      "suspect": "সন্দেহভাজন",
+      "convicted": "দোষী সাব্যস্ত",
+      "accused": "অভিযুক্ত"
+    },
+    "accusedStatus": {
+      "at_large": "পলাতক",
+      "arrested": "গ্রেফতার",
+      "convicted": "দোষী সাব্যস্ত",
+      "acquitted": "খালাস",
+      "deceased": "মৃত",
+      "other": "অন্যান্য"
+    },
     "failedToLoad": "ঘটনার বিবরণ লোড করা যায়নি।"
   }
 }

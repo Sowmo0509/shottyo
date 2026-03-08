@@ -24,7 +24,7 @@ export function IncidentGallery({ images, galleryLabel }: IncidentGalleryProps) 
         variants={fadeIn}
         className="flex items-center gap-4 border-b border-border/40 pb-4"
       >
-        <Heading as="h2" variant="h3" className="font-serif italic">
+        <Heading as="h2" variant="h3" className="font-dynamic italic">
           {galleryLabel}
         </Heading>
       </motion.div>

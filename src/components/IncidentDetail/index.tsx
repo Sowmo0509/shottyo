@@ -7,6 +7,7 @@ import { IncidentArticleHeader } from "./IncidentArticleHeader";
 import { IncidentDescription } from "./IncidentDescription";
 import { IncidentGallery } from "./IncidentGallery";
 import { IncidentVictims } from "./IncidentVictims";
+import { IncidentAccused } from "./IncidentAccused";
 import { IncidentVerdict } from "./IncidentVerdict";
 import { IncidentTimelineDetails } from "./IncidentTimelineDetails";
 import { IncidentTimelineSummary } from "./IncidentTimelineSummary";
@@ -62,6 +63,18 @@ export function IncidentDetail({ incident }: IncidentDetailProps) {
               language={language}
               victimsLabel={t.common.incidents.victims}
               ageLabel={t.common.incidents.age}
+            />
+          )}
+
+          {incident.accused && incident.accused.length > 0 && (
+            <IncidentAccused
+              accused={incident.accused}
+              language={language}
+              accusedLabel={t.common.incidents.accused}
+              ageLabel={t.common.incidents.age}
+              roleLabel={t.common.incidents.role}
+              legalStatusLabel={t.common.incidents.legalStatus}
+              t={t}
             />
           )}
 
