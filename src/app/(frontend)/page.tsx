@@ -14,12 +14,12 @@ export default async function Home() {
   }
 
   return (
-    <div className="container mx-auto px-4 md:px-8 py-16">
-      <HomeHeader />
-
-      <DivisionMap incidents={incidents} />
-
-      <IncidentList incidents={incidents} />
+    <div className="space-y-4 p-4">
+      <HomeHeader incidents={incidents} />
+      {/* <DivisionMap incidents={incidents} /> */}
+      <section id="incidents" aria-label="Incidents" className="bg-neutral-300 rounded-2xl">
+        <IncidentList incidents={incidents} />
+      </section>
     </div>
   );
 }

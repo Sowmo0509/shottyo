@@ -4,10 +4,10 @@
 
 @custom-variant dark (&:is(.dark *));
 
-@utility container {
+/* @utility container {
   max-width: 896px;
   margin: 0 auto;
-}
+} */
 
 @theme inline {
   --color-background: var(--background);
@@ -92,7 +92,7 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
-  --navbar: oklch(0.577 0.245 27.325);
+  --navbar: oklch(0 0 0);
   --navbar-foreground: oklch(0.985 0 0);
 }
 

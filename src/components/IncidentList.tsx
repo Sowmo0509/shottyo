@@ -3,6 +3,7 @@
 import { Incident } from "@/types";
 import { useAppStore } from "@/store/useAppStore";
 import { IncidentCard } from "./IncidentCard";
+import { Heading } from "./ui/typography";
 
 interface Props {
   incidents: Incident[] | null;
@@ -16,10 +17,15 @@ export function IncidentList({ incidents }: Props) {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-      {incidents.map((incident) => (
-        <IncidentCard key={incident._id} incident={incident} />
-      ))}
+    <div className="p-8 flex flex-col space-y-8">
+      <div>
+        <Heading>List of Incidents</Heading>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {incidents.map((incident) => (
+          <IncidentCard key={incident._id} incident={incident} />
+        ))}
+      </div>
     </div>
   );
 }

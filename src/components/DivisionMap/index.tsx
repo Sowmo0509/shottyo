@@ -79,11 +79,7 @@ const REGIONS_FILL_LAYER_ID = "regions-fill";
 const REGIONS_LINE_LAYER_ID = "regions-line";
 
 /** Custom control: button that flies to default center and zoom */
-function createCenterControl(
-  center: [number, number],
-  zoom: number,
-  duration: number,
-): { onAdd: (map: MapLibreMapType) => HTMLElement; onRemove: () => void } {
+function createCenterControl(center: [number, number], zoom: number, duration: number): { onAdd: (map: MapLibreMapType) => HTMLElement; onRemove: () => void } {
   let container: HTMLElement;
   let map: MapLibreMapType;
   return {
@@ -99,8 +95,7 @@ function createCenterControl(
       btn.style.display = "flex";
       btn.style.alignItems = "center";
       btn.style.justifyContent = "center";
-      btn.innerHTML =
-        '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>';
+      btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>';
       btn.addEventListener("click", () => {
         map.flyTo({ center, zoom, duration });
       });
@@ -217,10 +212,7 @@ export function DivisionMap({ incidents }: Props) {
     const map = evt.target;
     mapRef.current = map;
     map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
-    map.addControl(
-      createCenterControl(MAP_CONFIG.center, MAP_CONFIG.zoom, MAP_CONFIG.flyToDuration),
-      "top-right",
-    );
+    map.addControl(createCenterControl(MAP_CONFIG.center, MAP_CONFIG.zoom, MAP_CONFIG.flyToDuration), "top-right");
   }, []);
 
   const handleRegionClick = useCallback(
@@ -318,7 +310,7 @@ export function DivisionMap({ incidents }: Props) {
             {!styledGeoJson ? (
               <div className="flex items-center justify-center h-full text-muted-foreground text-sm bg-muted/30">Loading map…</div>
             ) : (
-              <Map initialViewState={INITIAL_VIEW} mapStyle={BLANK_MAP_STYLE} style={{ width: "100%", height: "100%" }} maxBounds={MAP_BOUNDS} minZoom={MAP_CONFIG.minZoom} maxZoom={MAP_CONFIG.maxZoom} dragPan={false} attributionControl={false} onLoad={handleMapLoad} onClick={handleRegionClick} interactiveLayerIds={[REGIONS_FILL_LAYER_ID]} cursor="pointer">
+              <Map initialViewState={INITIAL_VIEW} mapStyle={BLANK_MAP_STYLE} style={{ width: "100%", height: "100%" }} maxBounds={MAP_BOUNDS} minZoom={MAP_CONFIG.minZoom} maxZoom={MAP_CONFIG.maxZoom} dragPan={true} attributionControl={false} onLoad={handleMapLoad} onClick={handleRegionClick} interactiveLayerIds={[REGIONS_FILL_LAYER_ID]} cursor="pointer">
                 <Source id="regions" type="geojson" data={styledGeoJson}>
                   {/* @ts-expect-error MapLibre fill-color expression type is compatible */}
                   <Layer {...fillLayer} />
