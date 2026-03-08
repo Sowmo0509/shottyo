@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "motion/react";
-import Image from "next/image";
 import { UserX } from "lucide-react";
 import { Heading, Text } from "@/components/ui/typography";
 import { fadeIn, staggerContainer } from "./variants";
@@ -62,8 +61,20 @@ export function IncidentAccused({
           const role = getRoleLabel(t, person.role);
           const status = getStatusLabel(t, person.status);
 
-          const imageSource = person.image as Parameters<typeof urlFor>[0] | undefined;
-          const hasImage = imageSource && typeof imageSource === "object";
+          const rawImage = person.image;
+          const imageSource =
+            rawImage != null && (typeof rawImage === "string" || typeof rawImage === "object")
+              ? (rawImage as Parameters<typeof urlFor>[0])
+              : null;
+
+          let imageUrl: string | null = null;
+          if (imageSource) {
+            try {
+              imageUrl = urlFor(imageSource).width(224).height(224).fit("crop").url();
+            } catch {
+              imageUrl = null;
+            }
+          }
 
           return (
             <motion.div
@@ -72,12 +83,10 @@ export function IncidentAccused({
               className="py-6 first:pt-2 flex flex-col sm:flex-row gap-6"
             >
               <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-xl overflow-hidden bg-destructive/10 border border-destructive/20 shrink-0 flex items-center justify-center">
-                {hasImage ? (
-                  <Image
-                    src={urlFor(imageSource).width(224).height(224).fit("crop").url()}
+                {imageUrl ? (
+                  <img
+                    src={imageUrl}
                     alt={name || (language === "bn" ? "অভিযুক্তের ছবি" : "Accused photo")}
-                    width={224}
-                    height={224}
                     className="w-full h-full object-cover"
                   />
                 ) : (
