@@ -89,6 +89,80 @@ export const incident = defineType({
       title: "Verdict",
       type: "localeText",
     }),
+    defineField({
+      name: "accused",
+      title: "Accused / Suspects / Culprits",
+      type: "array",
+      description: "Culprits, suspects, or convicted criminals linked to this incident.",
+      of: [
+        {
+          type: "object",
+          name: "accusedPerson",
+          title: "Accused person",
+          fields: [
+            {
+              name: "name",
+              title: "Name",
+              type: "localeString",
+              validation: (Rule: { required: () => unknown }) => Rule.required(),
+            },
+            {
+              name: "role",
+              title: "Role / Type",
+              type: "string",
+              options: {
+                list: [
+                  { title: "Culprit", value: "culprit" },
+                  { title: "Suspect", value: "suspect" },
+                  { title: "Convicted / Criminal", value: "convicted" },
+                  { title: "Accused", value: "accused" },
+                ],
+                layout: "radio",
+              },
+              initialValue: "suspect",
+            },
+            {
+              name: "age",
+              title: "Age",
+              type: "number",
+            },
+            {
+              name: "description",
+              title: "Description",
+              type: "localeText",
+            },
+            {
+              name: "status",
+              title: "Legal status",
+              type: "string",
+              options: {
+                list: [
+                  { title: "At large", value: "at_large" },
+                  { title: "Arrested", value: "arrested" },
+                  { title: "Convicted", value: "convicted" },
+                  { title: "Acquitted", value: "acquitted" },
+                  { title: "Deceased", value: "deceased" },
+                  { title: "Other", value: "other" },
+                ],
+                layout: "dropdown",
+              },
+            },
+            {
+              name: "image",
+              title: "Photo",
+              type: "image",
+              options: { hotspot: true },
+            },
+          ],
+          preview: {
+            select: { title: "name.en" },
+            prepare({ title }: { title?: string }) {
+              return { title: title || "Accused person" };
+            },
+          },
+        },
+      ],
+    }),
   ],
   preview: {
     select: {

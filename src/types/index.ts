@@ -8,6 +8,19 @@ export type LocalizedText = {
   bn?: string;
 };
 
+export type AccusedRole = "culprit" | "suspect" | "convicted" | "accused";
+export type AccusedStatus = "at_large" | "arrested" | "convicted" | "acquitted" | "deceased" | "other";
+
+export interface AccusedPerson {
+  _key?: string;
+  name: LocalizedString;
+  role?: AccusedRole;
+  age?: number;
+  description?: LocalizedText;
+  status?: AccusedStatus;
+  image?: unknown;
+}
+
 export interface Incident {
   _id: string;
   title: LocalizedString;
@@ -21,6 +34,7 @@ export interface Incident {
   videoUrls?: string[];
   status: "open" | "closed" | "pending";
   verdict?: LocalizedText;
+  accused?: AccusedPerson[];
   victims?: Victim[];
   timeline?: TimelineEvent[];
 }
