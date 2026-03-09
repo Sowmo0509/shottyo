@@ -34,6 +34,14 @@
       "deceased": "Deceased",
       "other": "Other"
     },
+    "victimStatus": {
+      "deceased": "Deceased",
+      "injured": "Injured",
+      "missing": "Missing",
+      "safe": "Safe",
+      "arrested": "Arrested",
+      "other": "Other"
+    },
     "failedToLoad": "Failed to load incident details."
   }
 }

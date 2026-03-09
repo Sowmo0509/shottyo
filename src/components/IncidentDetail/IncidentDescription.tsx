@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
-import { PortableText } from "@portabletext/react";
+import { PortableText } from "next-sanity";
 import { Text } from "@/components/ui/typography";
 import { fadeIn } from "./variants";
 import { getFirstGrapheme } from "./utils";

@@ -3,34 +3,22 @@ import type { IncidentDetailTranslation } from "./types";
 import { getDescriptionPlainText, getDescriptionBlocks } from "@/lib/portableText";
 import type { PortableTextBlock } from "@/lib/portableText";
 
-export function getLocalized(
-  value: LocalizedString | LocalizedText | undefined,
-  language: string
-): string {
+export function getLocalized(value: LocalizedString | LocalizedText | undefined, language: string): string {
   if (!value) return "";
-  return language === "bn" && value.bn ? value.bn : value.en ?? "";
+  return language === "bn" && value.bn ? value.bn : (value.en ?? "");
 }
 
 /** Get description as plain text. Works for both legacy (string) and rich (block) content. */
-export function getDescriptionText(
-  value: { en?: string | unknown[]; bn?: string | unknown[] } | undefined,
-  language: string
-): string {
+export function getDescriptionText(value: { en?: string | unknown[]; bn?: string | unknown[] } | undefined, language: string): string {
   return getDescriptionPlainText(value as { en?: string | PortableTextBlock[]; bn?: string | PortableTextBlock[] }, language);
 }
 
 /** Get description as blocks for rich rendering. Returns null if legacy string or empty. */
-export function getDescriptionBlocksForLanguage(
-  value: { en?: unknown; bn?: unknown } | undefined,
-  language: string
-): PortableTextBlock[] | null {
+export function getDescriptionBlocksForLanguage(value: { en?: unknown; bn?: unknown } | undefined, language: string): PortableTextBlock[] | null {
   return getDescriptionBlocks(value, language);
 }
 
-export function getFirstGrapheme(
-  text: string,
-  language: string
-): { firstChar: string; rest: string } {
+export function getFirstGrapheme(text: string, language: string): { firstChar: string; rest: string } {
   if (!text) return { firstChar: "", rest: "" };
   if (typeof Intl !== "undefined" && Intl.Segmenter) {
     const segmenter = new Intl.Segmenter(language, { granularity: "grapheme" });
@@ -46,10 +34,7 @@ export function getFirstGrapheme(
   };
 }
 
-export function getStatusLabel(
-  t: IncidentDetailTranslation,
-  status: string
-): string {
+export function getStatusLabel(t: IncidentDetailTranslation, status: string): string {
   switch (status) {
     case "open":
       return t.common.incidents.status.open;

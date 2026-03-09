@@ -15,6 +15,7 @@ export type IncidentDetailTranslation = {
       status: { open: string; closed: string; inProgress: string };
       accusedRole: Record<string, string>;
       accusedStatus: Record<string, string>;
+      victimStatus: Record<string, string>;
     };
   };
 };

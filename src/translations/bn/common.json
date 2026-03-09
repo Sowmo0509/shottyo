@@ -34,6 +34,14 @@
       "deceased": "মৃত",
       "other": "অন্যান্য"
     },
+    "victimStatus": {
+      "deceased": "মৃত",
+      "injured": "আহত",
+      "missing": "নিখোঁজ",
+      "safe": "নিরাপদ",
+      "arrested": "গ্রেফতার",
+      "other": "অন্যান্য"
+    },
     "failedToLoad": "ঘটনার বিবরণ লোড করা যায়নি।"
   }
 }

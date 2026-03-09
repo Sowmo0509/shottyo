@@ -63,6 +63,7 @@ export function IncidentDetail({ incident }: IncidentDetailProps) {
               language={language}
               victimsLabel={t.common.incidents.victims}
               ageLabel={t.common.incidents.age}
+              t={t}
             />
           )}
 
